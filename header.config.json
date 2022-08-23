@@ -1,0 +1,26 @@
+{
+    "updateUrl": "",
+    "downloadUrl": "",
+    "supportUrl": "",
+    "iconUrl": "./assets/icon.png",
+    "includes": [
+        "https://*.ingress.com/intel*"
+    ],
+    "excludes": [
+        "https://*.ingress.com/mission/*"
+    ],
+    "requires": [],
+    "recources": [],
+    "connecters": [],
+    "matches": [
+        "https://*.ingress.com/intel*"
+    ],
+    "runAt": "document-start",
+    "grants": [
+        "GM_setValue",
+        "GM_getValue"
+    ],
+    "antifeatures": [],
+    "noframes": false,
+    "unwrap": false
+}
