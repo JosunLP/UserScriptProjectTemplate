@@ -41,10 +41,9 @@ function generateMultibleEntrys(type: string, array: string[]): string {
   debugger;
   if (array) {
     array.forEach((item: string) => {
-      result += `// ${type}     ${item} `;
+      result += `// ${type}     ${item}`;
       if (array.length > 1) {
         result += "\n";
-        result += "                    ";
       }
     });
   }
@@ -64,13 +63,13 @@ function removeEmptyLinesFromString(string: string): string {
  * Generates user script header
  */
 async function generateUserScriptHeader() {
-  const includes = generateMultibleEntrys("@include", config.includes);
   const excludes = generateMultibleEntrys("@exclude", config.excludes);
   const requires = generateMultibleEntrys("@require", config.requires);
   const resources = generateMultibleEntrys("@resource", config.resources);
   const connecters = generateMultibleEntrys("@connect", config.connecters);
   const grants = generateMultibleEntrys("@grant", config.grants);
   const matches = generateMultibleEntrys("@match", config.matches);
+  const includes = generateMultibleEntrys("@match", config.includes);
   const antifeatures = generateMultibleEntrys(
     "@antifeature",
     config.antifeatures
@@ -104,32 +103,31 @@ async function generateUserScriptHeader() {
   }
 
   let header = `// ==UserScript==
-                    // @name         ${pkg.name}
-                    // @namespace    ${pkg.homepage}
-                    // @version      ${pkg.version}
-                    // @description  ${pkg.description}
-                    // @author       ${pkg.author}
-                    // @homepage     ${pkg.homepage}
-                    // @icon64       ${base64url}
-                    // @run-at       ${config.runAt}
-  	                ${updateUrl}
-                    ${downloadUrl}
-                    ${supportUrl}
-                    ${includes}
-                    ${excludes}
-                    ${requires}
-                    ${resources}
-                    ${connecters}
-                    ${grants}
-                    ${matches}
-                    ${antifeatures}
-                    ${noframes}
-                    ${matchAllFrames}
-                    // ==/UserScript==
+// @name         ${pkg.name}
+// @namespace    ${pkg.homepage}
+// @version      ${pkg.version}
+// @description  ${pkg.description}
+// @author       ${pkg.author}
+// @homepage     ${pkg.homepage}
+// @icon64       ${base64url}
+// @run-at       ${config.runAt}
+${updateUrl}
+${downloadUrl}
+${supportUrl}
+${excludes}
+${requires}
+${resources}
+${connecters}
+${grants}
+${matches}
+${antifeatures}
+${noframes}
+${matchAllFrames}
+// ==/UserScript==
 `;
   header = removeEmptyLinesFromString(header);
-  console.log(header);
-  // appendHeader(header);
+  header += "\n";
+  appendHeader(header);
 }
 
 generateUserScriptHeader();
