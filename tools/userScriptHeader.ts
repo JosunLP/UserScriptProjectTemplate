@@ -1,7 +1,7 @@
 const fs = require("fs");
 const pkg = require("../package.json");
 const config = require("../header.config.json");
-const targetFile = "./dist/" + pkg.name + ".bundle.js";
+const targetFile = "./dist/" + pkg.name + ".user.js";
 
 /**
  * Appends header
