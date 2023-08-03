@@ -6,6 +6,8 @@
     "target": "ES6",
     "allowJs": false,
     "moduleResolution": "node",
-    "sourceMap": true
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
   }
 }

@@ -1,5 +1,5 @@
 const path = require('path');
-const pkg = require('./package.json');
+const pkgjsn = require('./package.json');
 
 module.exports = {
     entry: './src/index.ts',
@@ -18,7 +18,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
-        filename: pkg.name + '.user.js',
+        filename: pkgjsn.name + '.user.js',
         path: path.resolve(__dirname, 'dist'),
     },
 };
