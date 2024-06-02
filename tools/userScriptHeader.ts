@@ -1,6 +1,7 @@
-const fs = require("fs");
-const pkg = require("../package.json");
-const config = require("../header.config.json");
+import * as fs from "fs";
+import pkg from "../package.json";
+import config from "../header.config.json";
+
 const targetFile = "./dist/" + pkg.name + ".user.js";
 
 /**
@@ -8,11 +9,11 @@ const targetFile = "./dist/" + pkg.name + ".user.js";
  * @param header
  */
 function appendHeader(header: string) {
-  fs.readFile(targetFile, "utf8", (err: any, data: string) => {
+  fs.readFile(targetFile, "utf8", (err: NodeJS.ErrnoException | null, data: string) => {
     if (err) {
       throw err;
     }
-    fs.writeFile(targetFile, header + data, (err: any) => {
+    fs.writeFile(targetFile, header + data, (err: NodeJS.ErrnoException | null) => {
       if (err) {
         throw err;
       }
@@ -22,8 +23,8 @@ function appendHeader(header: string) {
 
 /**
  * Builds base64 url from file
- * @param filePath 
- * @returns  
+ * @param filePath
+ * @returns base64 url
  */
 async function buildBase64UrlFromFile(filePath: string): Promise<string> {
   const file = await fs.promises.readFile(filePath);
@@ -31,20 +32,16 @@ async function buildBase64UrlFromFile(filePath: string): Promise<string> {
 }
 
 /**
- * Generates multible entrys
+ * Generates multiple entries
  * @param type
  * @param array
- * @returns multible entrys
+ * @returns multiple entries
  */
-function generateMultibleEntrys(type: string, array: string[]): string {
+function generateMultipleEntries(type: string, array: string[]): string {
   let result: string = "";
-  debugger;
   if (array) {
     array.forEach((item: string) => {
-      result += `// ${type}     ${item}`;
-      if (array.length > 1) {
-        result += "\n";
-      }
+      result += `// ${type}     ${item}\n`;
     });
   }
   return result;
@@ -53,7 +50,7 @@ function generateMultibleEntrys(type: string, array: string[]): string {
 /**
  * Removes empty lines from string
  * @param string
- * @returns empty lines from string
+ * @returns string without empty lines
  */
 function removeEmptyLinesFromString(string: string): string {
   return string.replace(/\n\s*\n/g, "\n");
@@ -63,18 +60,16 @@ function removeEmptyLinesFromString(string: string): string {
  * Generates user script header
  */
 async function generateUserScriptHeader() {
-  const excludes = generateMultibleEntrys("@exclude", config.excludes);
-  const requires = generateMultibleEntrys("@require", config.requires);
-  const resources = generateMultibleEntrys("@resource", config.resources);
-  const connecters = generateMultibleEntrys("@connect", config.connecters);
-  const grants = generateMultibleEntrys("@grant", config.grants);
-  const matches = generateMultibleEntrys("@match", config.matches);
-  const includes = generateMultibleEntrys("@match", config.includes);
-  const antifeatures = generateMultibleEntrys(
-    "@antifeature",
-    config.antifeatures
-  );
+  const excludes = generateMultipleEntries("@exclude", config.excludes);
+  const requires = generateMultipleEntries("@require", config.requires);
+  const resources = generateMultipleEntries("@resource", config.resources);
+  const connecters = generateMultipleEntries("@connect", config.connecters);
+  const grants = generateMultipleEntries("@grant", config.grants);
+  const matches = generateMultipleEntries("@match", config.matches);
+  const includes = generateMultipleEntries("@match", config.includes);
+  const antifeatures = generateMultipleEntries("@antifeature", config.antifeatures);
   const base64url = await buildBase64UrlFromFile(config.iconUrl);
+
   let noframes = "";
   let matchAllFrames = "";
   let updateUrl = "";
@@ -82,24 +77,19 @@ async function generateUserScriptHeader() {
   let supportUrl = "";
 
   if (config.noframes) {
-    noframes = `// @noframes
-    `;
+    noframes = `// @noframes\n`;
   }
   if (config.matchAllFrames) {
-    matchAllFrames = `// @matchAllFrames
-    `;
+    matchAllFrames = `// @matchAllFrames\n`;
   }
   if (config.updateUrl !== "") {
-    updateUrl = `// @updateURL ${config.updateUrl}
-    `;
+    updateUrl = `// @updateURL ${config.updateUrl}\n`;
   }
   if (config.downloadUrl !== "") {
-    downloadUrl = `// @downloadURL ${config.downloadUrl}
-    `;
+    downloadUrl = `// @downloadURL ${config.downloadUrl}\n`;
   }
   if (config.supportUrl !== "") {
-    supportUrl = `// @supportURL ${config.supportUrl}
-    `;
+    supportUrl = `// @supportURL ${config.supportUrl}\n`;
   }
 
   let header = `// ==UserScript==
@@ -125,6 +115,7 @@ ${noframes}
 ${matchAllFrames}
 // ==/UserScript==
 `;
+
   header = removeEmptyLinesFromString(header);
   header += "\n";
   appendHeader(header);

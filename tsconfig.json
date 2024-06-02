@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
     "noImplicitAny": true,
     "module": "ESNext",
     "target": "ES6",
@@ -9,5 +8,9 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "paths": {
+      "undici-types": ["./node_modules/undici/types/index.d.ts"]
+    }
   }
 }

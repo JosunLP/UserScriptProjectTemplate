@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "A user script project template to create large and structured TypeScript projects for Tampermonkey or Greasemonkey. It is intended to form a scalable base and is primarily aimed at the Ingress community.",
   "main": "index.ts",
+  "module": "node",
   "scripts": {
-    "build": "webpack && npm run build-userScriptHeader",
-    "build-tooling": "tsc ./tools/userScriptHeader.ts --target esnext --module esnext --lib ESNext",
+    "build": "vite build && npm run build-userScriptHeader",
+    "build-tooling": "tsc ./tools/userScriptHeader.ts --resolveJsonModule --esModuleInterop",
     "build-userScriptHeader": "npm run build-tooling && node ./tools/userScriptHeader.js"
   },
   "repository": {
@@ -29,6 +30,9 @@
     "ts-loader": "^9.3.1",
     "ts-node": "^10.9.1",
     "typescript": "^4.7.4",
+    "undici-types": "^6.18.2",
+    "vite": "^5.2.12",
+    "vite-tsconfig-paths": "^4.3.2",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
   }

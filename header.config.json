@@ -4,17 +4,18 @@
     "supportUrl": "",
     "iconUrl": "./assets/icon.png",
     "includes": [
-        "https://*.ingress.com/intel*"
+        "https://*.josunlp.de/*",
+        "https://josunlp.de/*"
     ],
-    "excludes": [
-        "https://*.ingress.com/mission/*"
-    ],
+    "excludes": [],
     "requires": [],
-    "recources": [],
+    "resources": [],
     "connecters": [],
     "matches": [
-        "https://*.ingress.com/intel*"
+        "https://*.josunlp.de/*",
+        "https://josunlp.de/*"
     ],
+    "matchAllFrames": false,
     "runAt": "document-start",
     "grants": [
         "GM_setValue",
