@@ -1,7 +1,7 @@
 {
   "name": "userscript-project-template",
-  "version": "0.0.1",
-  "description": "A user script project template to create large and structured TypeScript projects for Tampermonkey or Greasemonkey. It is intended to form a scalable base and is primarily aimed at the Ingress community.",
+  "version": "1.0.0",
+  "description": "A modern, production-ready template for building UserScripts using TypeScript and Vite. This template provides a solid foundation with best practices, type safety, and modern development tools for Tampermonkey and Greasemonkey scripts.",
   "main": "index.ts",
   "module": "node",
   "scripts": {
@@ -12,6 +12,7 @@
     "build:prod": "vite build --mode production && npm run build-userScriptHeader",
     "build-tooling": "tsc ./tools/userScriptHeader.ts --resolveJsonModule --esModuleInterop",
     "build-userScriptHeader": "npm run build-tooling && node ./tools/userScriptHeader.js",
+    "validate": "npm run type-check && npm run lint",
     "lint": "eslint src/ --ext .ts,.tsx",
     "lint:fix": "eslint src/ --ext .ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,json}\"",
@@ -23,11 +24,15 @@
     "url": "git+https://github.com/JosunLP/UserScriptProjectTemplate.git"
   },
   "keywords": [
-    "User",
-    "Script",
-    "TypeScript",
-    "Webpack",
-    "Ingress"
+    "userscript",
+    "tampermonkey",
+    "greasemonkey",
+    "typescript",
+    "template",
+    "vite",
+    "browser-automation",
+    "web-enhancement",
+    "browser-scripting"
   ],
   "author": "Jonas Pfalzgraf <info@josunlp.de>",
   "license": "MIT",
