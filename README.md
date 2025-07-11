@@ -1,8 +1,24 @@
 # UserScript Project Template
 
-[![GitHub license](https://img.shields.io/github/license/JosunLP/UserScriptProjectTemplate)](https://github.com/JosunLP/UserScriptProjectTemplate/blob/main/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/JosunLP/UserScriptProjectTemplate)](https://github.com/JosunLP/UserScriptProjectTemplate/issues)
-[![GitHub stars](https://img.shields.io/github/stars/JosunLP/UserScriptProjectTemplate)](https://github.com/JosunLP/UserScriptProjectTemplate/stargazers)
+[![GitHub license](https://img.shields.io/github/license/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/blob/main/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/issues)
+[![GitHub stars](https://img.shields.io/github/stars/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/network)
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-blue?logo=typescript&style=for-the-badge)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-7.0+-646CFF?logo=vite&style=for-the-badge)](https://vitejs.dev/)
+[![ESLint](https://img.shields.io/badge/ESLint-8.57+-4B32C3?logo=eslint&style=for-the-badge)](https://eslint.org/)
+[![Prettier](https://img.shields.io/badge/Prettier-3.6+-F7B93E?logo=prettier&style=for-the-badge)](https://prettier.io/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&style=for-the-badge)](https://nodejs.org/)
+
+[![Tampermonkey](https://img.shields.io/badge/Tampermonkey-Compatible-00485B?logo=tampermonkey&style=for-the-badge)](https://www.tampermonkey.net/)
+[![Greasemonkey](https://img.shields.io/badge/Greasemonkey-Compatible-FF6600?logo=firefox&style=for-the-badge)](https://www.greasespot.net/)
+[![Violentmonkey](https://img.shields.io/badge/Violentmonkey-Compatible-663399?logo=violentmonkey&style=for-the-badge)](https://violentmonkey.github.io/)
+[![Mobile Support](https://img.shields.io/badge/Mobile-Support-00C851?logo=android&style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate#mobile-browser-support)
+
+[![Last Commit](https://img.shields.io/github/last-commit/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/commits)
+[![Contributors](https://img.shields.io/github/contributors/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/graphs/contributors)
+[![Repository Size](https://img.shields.io/github/repo-size/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate)
 
 ## Description
 
@@ -10,19 +26,19 @@ A modern, production-ready template for building UserScripts using TypeScript an
 
 ## Features
 
-• 🚀 **Modern Tech Stack:** TypeScript, Vite, ESLint, Prettier
-• 🛡️ **Type Safety:** Strict TypeScript configuration with comprehensive UserScript API definitions
-• 🔧 **Development Tools:** ESLint, Prettier, automated build pipeline
-• 🎯 **Environment Support:** Separate development and production configurations
-• 📦 **Modular Architecture:** Component system with reusable utilities
-• 💾 **Storage Management:** Type-safe wrapper for GM_setValue/GM_getValue
-• 🛠️ **Build System:** Optimized Vite configuration with automatic header generation
-• 🎨 **DOM Utilities:** Helper functions for element manipulation and waiting
-• 🔒 **Error Handling:** Comprehensive error boundary system
-• ⚡ **Event System:** Type-safe event emitter for module communication
-• 📱 **Mobile Support:** Touch-optimized interface with mobile browser detection
-• 🤏 **Touch Gestures:** Built-in touch event handling and gesture recognition
-• 📲 **Responsive Design:** Mobile-first CSS with safe area support for notched devices
+- 🚀 **Modern Tech Stack:** TypeScript, Vite, ESLint, Prettier
+- 🛡️ **Type Safety:** Strict TypeScript configuration with comprehensive UserScript API definitions
+- 🔧 **Development Tools:** ESLint, Prettier, automated build pipeline
+- 🎯 **Environment Support:** Separate development and production configurations
+- 📦 **Modular Architecture:** Component system with reusable utilities
+- 💾 **Storage Management:** Type-safe wrapper for GM_setValue/GM_getValue
+- 🛠️ **Build System:** Optimized Vite configuration with automatic header generation
+- 🎨 **DOM Utilities:** Helper functions for element manipulation and waiting
+- 🔒 **Error Handling:** Comprehensive error boundary system
+- ⚡ **Event System:** Type-safe event emitter for module communication
+- 📱 **Mobile Support:** Touch-optimized interface with mobile browser detection
+- 🤏 **Touch Gestures:** Built-in touch event handling and gesture recognition
+- 📲 **Responsive Design:** Mobile-first CSS with safe area support for notched devices
 
 ## Installation
 
@@ -64,9 +80,9 @@ src/
 
 tools/
 ├── userScriptHeader.ts  # UserScript header generator
-└── userScriptHeader.js  # Compiled header generator
 
 assets/               # Icons and static resources
+└── icon.afdesign
 ```
 
 ### Configuration
@@ -240,10 +256,10 @@ console.log('Portrait mode:', MobileUtils.isPortrait());
 
 ## UserScript Compatibility
 
-• **Tampermonkey:** Full support with all GM\_\* APIs
-• **Greasemonkey:** Compatible with standard UserScript APIs
-• **Violentmonkey:** Full compatibility
-• **Safari:** Works with userscript managers
+- **Tampermonkey:** Full support with all GM\_\* APIs
+- **Greasemonkey:** Compatible with standard UserScript APIs
+- **Violentmonkey:** Full compatibility
+- **Safari:** Works with userscript managers
 
 ### Mobile Browser Support
 
@@ -261,11 +277,11 @@ console.log('Portrait mode:', MobileUtils.isPortrait());
 
 ### Mobile Features
 
-• **Touch Gestures:** Tap, swipe, and pinch detection
-• **Responsive Design:** Mobile-first CSS with viewport adaptation
-• **Safe Area Support:** Automatic handling of notched devices
-• **Orientation Detection:** Portrait/landscape change handling
-• **Mobile-Optimized UI:** Touch-friendly buttons and menus
+- **Touch Gestures:** Tap, swipe, and pinch detection
+- **Responsive Design:** Mobile-first CSS with viewport adaptation
+- **Safe Area Support:** Automatic handling of notched devices
+- **Orientation Detection:** Portrait/landscape change handling
+- **Mobile-Optimized UI:** Touch-friendly buttons and menus
 
 ## Contributing
 
@@ -278,12 +294,12 @@ console.log('Portrait mode:', MobileUtils.isPortrait());
 
 ## Development Guidelines
 
-• Follow TypeScript best practices
-• Use meaningful variable and function names
-• Add proper error handling
-• Write self-documenting code
-• Follow the established project structure
-• Run `npm run validate` before committing
+- Follow TypeScript best practices
+- Use meaningful variable and function names
+- Add proper error handling
+- Write self-documenting code
+- Follow the established project structure
+- Run `npm run validate` before committing
 
 ## License
 
@@ -293,23 +309,9 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 
 **_Jonas Pfalzgraf_**
 
-• Email: [info@josunlp.de](mailto:info@josunlp.de)
-• GitHub: [@JosunLP](https://github.com/JosunLP)
-
-## Changelog
-
-### v0.0.1 (Current)
-
-• ✨ Modern TypeScript setup with strict type checking
-• 🛡️ Comprehensive UserScript API definitions
-• 🎨 Modular architecture with utilities and components
-• 🔧 ESLint and Prettier configuration
-• 📦 Optimized Vite build system
-• 🚀 Environment-based configuration
-• 💾 Type-safe storage management
-• 🎯 Event-driven module system
-• ⚡ DOM manipulation utilities
-• 🛠️ Automated header generation
+- Email: [info@josunlp.de](mailto:info@josunlp.de)
+- GitHub: [@JosunLP](https://github.com/JosunLP)
+- Website: [josunlp.de](https://josunlp.de)
 
 ---
 
