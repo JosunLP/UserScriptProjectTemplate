@@ -309,9 +309,9 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 
 **_Jonas Pfalzgraf_**
 
-• Email: [info@josunlp.de](mailto:info@josunlp.de)
-• GitHub: [@JosunLP](https://github.com/JosunLP)
-• Website: [josunlp.de](https://josunlp.de)
+- Email: [info@josunlp.de](mailto:info@josunlp.de)
+- GitHub: [@JosunLP](https://github.com/JosunLP)
+- Website: [josunlp.de](https://josunlp.de)
 
 ---
 
