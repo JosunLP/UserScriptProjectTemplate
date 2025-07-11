@@ -1,15 +1,34 @@
-import * as fs from "fs";
-import config from "../header.config.json";
-import pkg from "../package.json";
+import * as fs from 'fs';
+import config from '../header.config.json';
+import pkg from '../package.json';
 
-const targetFile = "./dist/" + pkg.name + ".user.js";
+// Check which file exists to determine the environment
+const prodFile = `./dist/${pkg.name}.user.js`;
+const devFile = `./dist/${pkg.name}.dev.user.js`;
+
+let targetFile: string;
+let environment: 'production' | 'development';
+
+if (fs.existsSync(prodFile)) {
+  targetFile = prodFile;
+  environment = 'production';
+} else if (fs.existsSync(devFile)) {
+  targetFile = devFile;
+  environment = 'development';
+} else {
+  console.error('❌ No UserScript file found in dist/');
+  console.error(`Expected either: ${prodFile} or ${devFile}`);
+  process.exit(1);
+}
+
+console.log(`🔧 Building UserScript header for ${environment} (${targetFile})`);
 
 /**
  * Appends header
  * @param header
  */
 function appendHeader(header: string) {
-  fs.readFile(targetFile, "utf8", (err: NodeJS.ErrnoException | null, data: string) => {
+  fs.readFile(targetFile, 'utf8', (err: NodeJS.ErrnoException | null, data: string) => {
     if (err) {
       throw err;
     }
@@ -28,7 +47,7 @@ function appendHeader(header: string) {
  */
 async function buildBase64UrlFromFile(filePath: string): Promise<string> {
   const file = await fs.promises.readFile(filePath);
-  return "data:image/png;base64," + file.toString("base64");
+  return 'data:image/png;base64,' + file.toString('base64');
 }
 
 /**
@@ -38,7 +57,7 @@ async function buildBase64UrlFromFile(filePath: string): Promise<string> {
  * @returns multiple entries
  */
 function generateMultipleEntries(type: string, array: string[]): string {
-  let result: string = "";
+  let result: string = '';
   if (array) {
     array.forEach((item: string) => {
       result += `// ${type}     ${item}\n`;
@@ -53,7 +72,7 @@ function generateMultipleEntries(type: string, array: string[]): string {
  * @returns string without empty lines
  */
 function removeEmptyLinesFromString(string: string): string {
-  return string.replace(/\n\s*\n/g, "\n");
+  return string.replace(/\n\s*\n/g, '\n');
 }
 
 /**
@@ -62,30 +81,34 @@ function removeEmptyLinesFromString(string: string): string {
 async function generateUserScriptHeader() {
   // Determine environment from NODE_ENV or default to production
   const environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
-  console.log(`🔧 Building UserScript header for environment: ${environment}`);
 
   // Get environment-specific config or fallback to empty arrays
   const envConfig = config.environments?.[environment] || {
     includes: [],
     excludes: [],
-    grants: []
+    grants: [],
   };
 
-  const excludes = generateMultipleEntries("@exclude", envConfig.excludes);
-  const requires = generateMultipleEntries("@require", config.requires);
-  const resources = generateMultipleEntries("@resource", config.resources);
-  const connecters = generateMultipleEntries("@connect", config.connecters);
-  const grants = generateMultipleEntries("@grant", envConfig.grants);
-  const matches = generateMultipleEntries("@match", config.matches);
-  const includes = generateMultipleEntries("@match", envConfig.includes);
-  const antifeatures = generateMultipleEntries("@antifeature", config.antifeatures);
+  const excludes = generateMultipleEntries('@exclude', envConfig.excludes);
+  const requires = generateMultipleEntries('@require', config.requires);
+  const resources = generateMultipleEntries('@resource', config.resources);
+  const connecters = generateMultipleEntries('@connect', config.connecters);
+  const grants = generateMultipleEntries('@grant', envConfig.grants);
+
+  // Use environment-specific includes as matches, fallback to root matches if available
+  const allMatches = envConfig.includes.length > 0 ? envConfig.includes : config.matches;
+  const matches = generateMultipleEntries('@match', allMatches);
+
+  // No includes needed as we use matches
+  const includes = '';
+  const antifeatures = generateMultipleEntries('@antifeature', config.antifeatures);
   const base64url = await buildBase64UrlFromFile(config.iconUrl);
 
-  let noframes = "";
-  let matchAllFrames = "";
-  let updateUrl = "";
-  let downloadUrl = "";
-  let supportUrl = "";
+  let noframes = '';
+  let matchAllFrames = '';
+  let updateUrl = '';
+  let downloadUrl = '';
+  let supportUrl = '';
 
   if (config.noframes) {
     noframes = `// @noframes\n`;
@@ -93,13 +116,13 @@ async function generateUserScriptHeader() {
   if (config.matchAllFrames) {
     matchAllFrames = `// @matchAllFrames\n`;
   }
-  if (config.updateUrl !== "") {
+  if (config.updateUrl !== '') {
     updateUrl = `// @updateURL ${config.updateUrl}\n`;
   }
-  if (config.downloadUrl !== "") {
+  if (config.downloadUrl !== '') {
     downloadUrl = `// @downloadURL ${config.downloadUrl}\n`;
   }
-  if (config.supportUrl !== "") {
+  if (config.supportUrl !== '') {
     supportUrl = `// @supportURL ${config.supportUrl}\n`;
   }
 
@@ -128,7 +151,7 @@ ${matchAllFrames}
 `;
 
   header = removeEmptyLinesFromString(header);
-  header += "\n";
+  header += '\n';
   appendHeader(header);
 }
 

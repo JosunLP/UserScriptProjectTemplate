@@ -6,6 +6,8 @@
   "module": "node",
   "scripts": {
     "dev": "vite build --watch --mode development",
+    "dev:header": "npm run build-userScriptHeader",
+    "dev:build": "vite build --mode development && npm run build-userScriptHeader",
     "build": "vite build && npm run build-userScriptHeader",
     "build:prod": "vite build --mode production && npm run build-userScriptHeader",
     "build-tooling": "tsc ./tools/userScriptHeader.ts --resolveJsonModule --esModuleInterop",
