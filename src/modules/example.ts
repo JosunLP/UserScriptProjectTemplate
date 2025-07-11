@@ -22,6 +22,7 @@ interface ExampleModuleEvents {
 export class ExampleModule extends EventEmitter<ExampleModuleEvents> {
   private isInitialized = false;
   private actionCount = 0;
+  private lastActionTime = 0;
 
   constructor() {
     super();
@@ -36,6 +37,7 @@ export class ExampleModule extends EventEmitter<ExampleModuleEvents> {
 
       // Load persistent data
       this.actionCount = Storage.get<number>('exampleModule.actionCount', 0) || 0;
+      this.lastActionTime = Storage.get<number>('exampleModule.lastActionTime', 0) || 0;
 
       // Wait for required DOM elements (example)
       await this.waitForPageElements();
@@ -164,9 +166,11 @@ export class ExampleModule extends EventEmitter<ExampleModuleEvents> {
   public performAction(trigger: string): void {
     this.actionCount++;
     const timestamp = Date.now();
+    this.lastActionTime = timestamp;
 
-    // Store the updated count
+    // Store the updated count and last action time
     Storage.set('exampleModule.actionCount', this.actionCount);
+    Storage.set('exampleModule.lastActionTime', timestamp);
 
     // Emit event
     this.emit('actionPerformed', { action: trigger, timestamp });
@@ -205,7 +209,7 @@ export class ExampleModule extends EventEmitter<ExampleModuleEvents> {
     const stats = {
       initialized: this.isInitialized,
       actionCount: this.actionCount,
-      lastAction: Storage.get<number>('exampleModule.lastActionTime', 0),
+      lastAction: this.lastActionTime,
     };
 
     const message = [
@@ -230,6 +234,7 @@ export class ExampleModule extends EventEmitter<ExampleModuleEvents> {
       Storage.remove('exampleModule.actionCount');
       Storage.remove('exampleModule.lastActionTime');
       this.actionCount = 0;
+      this.lastActionTime = 0;
       console.log('🧹 Example module data reset');
       this.showNotification('Module data reset!');
     }
