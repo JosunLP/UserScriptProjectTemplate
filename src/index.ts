@@ -1,6 +1,7 @@
 import { ExampleModule } from '@/modules/example';
 import { DOMUtils } from '@/utils/dom';
 import { EventEmitter } from '@/utils/events';
+import { MobileUtils } from '@/utils/mobile';
 import { Storage } from '@/utils/storage';
 
 /**
@@ -60,6 +61,14 @@ class App extends EventEmitter<AppEvents> {
   protected async main(): Promise<void> {
     console.log('👋 Hello from UserScript Template!');
 
+    // Mobile detection and setup
+    const mobileInfo = MobileUtils.detect();
+    if (mobileInfo.isMobile) {
+      console.log('📱 Mobile browser detected:', mobileInfo.browser);
+      MobileUtils.addMobileStyles();
+      MobileUtils.logMobileInfo();
+    }
+
     // Example: Add some basic functionality
     this.addExampleFeatures();
 
@@ -75,11 +84,27 @@ class App extends EventEmitter<AppEvents> {
       // Initialize example module
       const exampleModule = new ExampleModule();
       await exampleModule.initialize();
-
-      // Register the module
       this.registerModule('example', exampleModule);
 
-      // Listen to module events
+      // Initialize mobile module if on mobile device
+      const mobileInfo = MobileUtils.detect();
+      if (mobileInfo.isMobile || mobileInfo.hasTouch) {
+        const { MobileModule } = await import('@/modules/mobile');
+        const mobileModule = new MobileModule();
+        await mobileModule.initialize();
+        this.registerModule('mobile', mobileModule);
+
+        // Listen to mobile module events
+        mobileModule.on('gestureDetected', ({ type, position }) => {
+          console.log(`📱 Gesture detected: ${type} at ${position.x}, ${position.y}`);
+        });
+
+        mobileModule.on('orientationChanged', ({ orientation }) => {
+          console.log(`📱 Orientation changed to: ${orientation}`);
+        });
+      }
+
+      // Listen to example module events
       exampleModule.on('actionPerformed', ({ action, timestamp }) => {
         console.log(
           `📡 Module action received: ${action} at ${new Date(timestamp).toLocaleString()}`
@@ -94,28 +119,72 @@ class App extends EventEmitter<AppEvents> {
    * Example features to demonstrate the template
    */
   private addExampleFeatures(): void {
-    // Example: Add custom styles
-    DOMUtils.addStyles(
-      `
+    // Add mobile-optimized styles
+    const mobileInfo = MobileUtils.detect();
+    const baseCss = `
       .userscript-highlight {
         background-color: yellow !important;
         border: 2px solid red !important;
       }
-    `,
-      'userscript-styles'
-    );
+    `;
+
+    // Add mobile-specific styles if on mobile
+    const mobileCss = mobileInfo.isMobile
+      ? `
+      .userscript-highlight {
+        padding: 8px !important;
+        border-radius: 4px !important;
+        font-size: 16px !important; /* Prevent zoom on iOS */
+      }
+    `
+      : '';
+
+    DOMUtils.addStyles(baseCss + mobileCss, 'userscript-styles');
 
     // Example: Storage usage
     const visitCount = (Storage.get<number>('visitCount', 0) || 0) + 1;
     Storage.set('visitCount', visitCount);
     console.log(`📊 This is visit #${visitCount}`);
 
-    // Example: Add menu command
+    // Example: Add menu command (with mobile detection)
     if (typeof GM_registerMenuCommand !== 'undefined') {
       GM_registerMenuCommand('Show Visit Count', () => {
         const count = Storage.get<number>('visitCount', 0);
-        alert(`You have visited this page ${count} times!`);
+
+        if (mobileInfo.isMobile) {
+          // Mobile-friendly notification
+          if (typeof GM_notification !== 'undefined') {
+            GM_notification(`Visit Count: ${count}`, 'UserScript Info', undefined, () => {
+              console.log('Notification clicked');
+            });
+          } else {
+            alert(`You have visited this page ${count} times!`);
+          }
+        } else {
+          // Desktop alert
+          alert(`You have visited this page ${count} times!`);
+        }
       });
+
+      // Add mobile-specific menu command
+      if (mobileInfo.isMobile) {
+        GM_registerMenuCommand('Mobile Info', () => {
+          MobileUtils.logMobileInfo();
+
+          const info = `
+Device: ${mobileInfo.isAndroid ? 'Android' : mobileInfo.isIOS ? 'iOS' : 'Other'}
+Touch Support: ${mobileInfo.hasTouch ? 'Yes' : 'No'}
+UserScript Support: ${MobileUtils.supportsUserScripts() ? 'Yes' : 'No'}
+Recommended Manager: ${MobileUtils.getRecommendedUserScriptManager()}
+          `;
+
+          if (typeof GM_notification !== 'undefined') {
+            GM_notification(info, 'Mobile Device Info');
+          } else {
+            alert(info);
+          }
+        });
+      }
     }
   }
 

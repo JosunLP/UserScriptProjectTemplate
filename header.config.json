@@ -1,50 +1,58 @@
 {
-    "updateUrl": "",
-    "downloadUrl": "",
-    "supportUrl": "",
-    "iconUrl": "./assets/icon.png",
-    "environments": {
-        "development": {
-            "includes": [
-                "http://localhost:*/*",
-                "https://localhost:*/*",
-                "https://*.josunlp.de/*",
-                "https://josunlp.de/*"
-            ],
-            "excludes": [],
-            "grants": [
-                "GM_setValue",
-                "GM_getValue",
-                "GM_deleteValue",
-                "GM_listValues",
-                "GM_log",
-                "GM_notification",
-                "GM_registerMenuCommand",
-                "GM_unregisterMenuCommand"
-            ]
-        },
-        "production": {
-            "includes": [
-                "https://*.josunlp.de/*",
-                "https://josunlp.de/*"
-            ],
-            "excludes": [],
-            "grants": [
-                "GM_setValue",
-                "GM_getValue",
-                "GM_deleteValue",
-                "GM_listValues",
-                "GM_registerMenuCommand"
-            ]
-        }
+  "updateUrl": "",
+  "downloadUrl": "",
+  "supportUrl": "",
+  "iconUrl": "./assets/icon.png",
+  "environments": {
+    "development": {
+      "includes": [
+        "http://localhost:*/*",
+        "https://localhost:*/*",
+        "https://*.josunlp.de/*",
+        "https://josunlp.de/*"
+      ],
+      "excludes": [],
+      "grants": [
+        "GM_setValue",
+        "GM_getValue",
+        "GM_deleteValue",
+        "GM_listValues",
+        "GM_log",
+        "GM_notification",
+        "GM_registerMenuCommand",
+        "GM_unregisterMenuCommand"
+      ]
     },
-    "requires": [],
-    "resources": [],
-    "connecters": [],
-    "matches": [],
-    "matchAllFrames": false,
-    "runAt": "document-start",
-    "antifeatures": [],
-    "noframes": false,
-    "unwrap": false
+    "production": {
+      "includes": ["https://*.josunlp.de/*", "https://josunlp.de/*"],
+      "excludes": [],
+      "grants": [
+        "GM_setValue",
+        "GM_getValue",
+        "GM_deleteValue",
+        "GM_listValues",
+        "GM_registerMenuCommand"
+      ]
+    }
+  },
+  "mobile": {
+    "supportedBrowsers": [
+      "Kiwi Browser (Android)",
+      "Microsoft Edge Mobile",
+      "Firefox Mobile",
+      "Safari Mobile (iOS)",
+      "Yandex Browser"
+    ],
+    "touchOptimized": true,
+    "responsiveDesign": true
+  },
+  "requires": [],
+  "resources": [],
+  "connecters": [],
+  "matches": [],
+  "matchAllFrames": false,
+  "runAt": "document-start",
+  "antifeatures": [],
+  "noframes": false,
+  "unwrap": false
 }

@@ -1,7 +1,7 @@
 {
   "name": "userscript-project-template",
   "version": "1.0.0",
-  "description": "A modern, production-ready template for building UserScripts using TypeScript and Vite. This template provides a solid foundation with best practices, type safety, and modern development tools for Tampermonkey and Greasemonkey scripts.",
+  "description": "A modern, production-ready template for building UserScripts using TypeScript and Vite with mobile browser support, touch gestures, and responsive design for Tampermonkey and Greasemonkey scripts.",
   "main": "index.ts",
   "module": "node",
   "scripts": {
@@ -32,7 +32,13 @@
     "vite",
     "browser-automation",
     "web-enhancement",
-    "browser-scripting"
+    "browser-scripting",
+    "mobile-support",
+    "touch-gestures",
+    "responsive-design",
+    "mobile-browser",
+    "kiwi-browser",
+    "edge-mobile"
   ],
   "author": "Jonas Pfalzgraf <info@josunlp.de>",
   "license": "MIT",

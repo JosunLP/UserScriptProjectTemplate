@@ -20,6 +20,9 @@ A modern, production-ready template for building UserScripts using TypeScript an
 • 🎨 **DOM Utilities:** Helper functions for element manipulation and waiting
 • 🔒 **Error Handling:** Comprehensive error boundary system
 • ⚡ **Event System:** Type-safe event emitter for module communication
+• 📱 **Mobile Support:** Touch-optimized interface with mobile browser detection
+• 🤏 **Touch Gestures:** Built-in touch event handling and gesture recognition
+• 📲 **Responsive Design:** Mobile-first CSS with safe area support for notched devices
 
 ## Installation
 
@@ -202,12 +205,67 @@ export class MyModule extends EventEmitter<ModuleEvents> {
 }
 ```
 
+### Mobile Utilities
+
+Mobile-specific functionality for touch-enabled devices:
+
+```typescript
+import { MobileUtils } from '@/utils/mobile';
+
+// Detect mobile browser and capabilities
+const detection = MobileUtils.detect();
+console.log('Is Mobile:', detection.isMobile);
+console.log('Has Touch:', detection.hasTouch);
+console.log('Browser:', detection.browser);
+
+// Add mobile-optimized styles
+if (detection.isMobile) {
+  MobileUtils.addMobileStyles();
+}
+
+// Unified touch/mouse event handling
+MobileUtils.addUnifiedEventListener(element, 'start', event => {
+  const position = MobileUtils.getEventPosition(event);
+  console.log('Touch/click at:', position);
+});
+
+// Create mobile-friendly buttons
+const button = mobileModule.createMobileButton('Action', () => {
+  console.log('Button pressed');
+});
+
+// Orientation detection
+console.log('Portrait mode:', MobileUtils.isPortrait());
+```
+
 ## UserScript Compatibility
 
 • **Tampermonkey:** Full support with all GM\_\* APIs
 • **Greasemonkey:** Compatible with standard UserScript APIs
 • **Violentmonkey:** Full compatibility
 • **Safari:** Works with userscript managers
+
+### Mobile Browser Support
+
+**Android:**
+
+- **Kiwi Browser:** Full Chrome extension + UserScript support
+- **Microsoft Edge Mobile:** Tampermonkey support
+- **Firefox Mobile:** Greasemonkey, Tampermonkey, Violentmonkey
+- **Yandex Browser:** Chrome extension support
+
+**iOS:**
+
+- **Safari Mobile:** Tampermonkey or Userscripts App
+- Limited support due to iOS restrictions
+
+### Mobile Features
+
+• **Touch Gestures:** Tap, swipe, and pinch detection
+• **Responsive Design:** Mobile-first CSS with viewport adaptation
+• **Safe Area Support:** Automatic handling of notched devices
+• **Orientation Detection:** Portrait/landscape change handling
+• **Mobile-Optimized UI:** Touch-friendly buttons and menus
 
 ## Contributing
 
