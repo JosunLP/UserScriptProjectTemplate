@@ -643,5 +643,23 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,webstorm,intellij,sublimetext
 
-dist
+# Project specific
+dist/
+build/
 tools/userScriptHeader.js
+
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+*.log

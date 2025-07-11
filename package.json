@@ -5,9 +5,16 @@
   "main": "index.ts",
   "module": "node",
   "scripts": {
+    "dev": "vite build --watch --mode development",
     "build": "vite build && npm run build-userScriptHeader",
+    "build:prod": "vite build --mode production && npm run build-userScriptHeader",
     "build-tooling": "tsc ./tools/userScriptHeader.ts --resolveJsonModule --esModuleInterop",
-    "build-userScriptHeader": "npm run build-tooling && node ./tools/userScriptHeader.js"
+    "build-userScriptHeader": "npm run build-tooling && node ./tools/userScriptHeader.js",
+    "lint": "eslint src/ --ext .ts,.tsx",
+    "lint:fix": "eslint src/ --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,json}\"",
+    "type-check": "tsc --noEmit",
+    "clean": "rimraf dist"
   },
   "repository": {
     "type": "git",
@@ -27,11 +34,18 @@
   },
   "homepage": "https://github.com/JosunLP/UserScriptProjectTemplate#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.5.1",
+    "prettier": "^3.6.2",
+    "rimraf": "^5.0.10",
     "ts-loader": "^9.3.1",
     "ts-node": "^10.9.1",
-    "typescript": "^4.7.4",
+    "typescript": "^5.4.0",
     "undici-types": "^6.18.2",
-    "vite": "^5.2.12",
+    "vite": "^7.0.4",
     "vite-tsconfig-paths": "^4.3.2",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"

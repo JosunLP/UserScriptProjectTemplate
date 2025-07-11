@@ -1,6 +1,6 @@
 import * as fs from "fs";
-import pkg from "../package.json";
 import config from "../header.config.json";
+import pkg from "../package.json";
 
 const targetFile = "./dist/" + pkg.name + ".user.js";
 
@@ -60,13 +60,24 @@ function removeEmptyLinesFromString(string: string): string {
  * Generates user script header
  */
 async function generateUserScriptHeader() {
-  const excludes = generateMultipleEntries("@exclude", config.excludes);
+  // Determine environment from NODE_ENV or default to production
+  const environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
+  console.log(`🔧 Building UserScript header for environment: ${environment}`);
+
+  // Get environment-specific config or fallback to empty arrays
+  const envConfig = config.environments?.[environment] || {
+    includes: [],
+    excludes: [],
+    grants: []
+  };
+
+  const excludes = generateMultipleEntries("@exclude", envConfig.excludes);
   const requires = generateMultipleEntries("@require", config.requires);
   const resources = generateMultipleEntries("@resource", config.resources);
   const connecters = generateMultipleEntries("@connect", config.connecters);
-  const grants = generateMultipleEntries("@grant", config.grants);
+  const grants = generateMultipleEntries("@grant", envConfig.grants);
   const matches = generateMultipleEntries("@match", config.matches);
-  const includes = generateMultipleEntries("@match", config.includes);
+  const includes = generateMultipleEntries("@match", envConfig.includes);
   const antifeatures = generateMultipleEntries("@antifeature", config.antifeatures);
   const base64url = await buildBase64UrlFromFile(config.iconUrl);
 

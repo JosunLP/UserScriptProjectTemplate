@@ -3,24 +3,47 @@
     "downloadUrl": "",
     "supportUrl": "",
     "iconUrl": "./assets/icon.png",
-    "includes": [
-        "https://*.josunlp.de/*",
-        "https://josunlp.de/*"
-    ],
-    "excludes": [],
+    "environments": {
+        "development": {
+            "includes": [
+                "http://localhost:*/*",
+                "https://localhost:*/*",
+                "https://*.josunlp.de/*",
+                "https://josunlp.de/*"
+            ],
+            "excludes": [],
+            "grants": [
+                "GM_setValue",
+                "GM_getValue",
+                "GM_deleteValue",
+                "GM_listValues",
+                "GM_log",
+                "GM_notification",
+                "GM_registerMenuCommand",
+                "GM_unregisterMenuCommand"
+            ]
+        },
+        "production": {
+            "includes": [
+                "https://*.josunlp.de/*",
+                "https://josunlp.de/*"
+            ],
+            "excludes": [],
+            "grants": [
+                "GM_setValue",
+                "GM_getValue",
+                "GM_deleteValue",
+                "GM_listValues",
+                "GM_registerMenuCommand"
+            ]
+        }
+    },
     "requires": [],
     "resources": [],
     "connecters": [],
-    "matches": [
-        "https://*.josunlp.de/*",
-        "https://josunlp.de/*"
-    ],
+    "matches": [],
     "matchAllFrames": false,
     "runAt": "document-start",
-    "grants": [
-        "GM_setValue",
-        "GM_getValue"
-    ],
     "antifeatures": [],
     "noframes": false,
     "unwrap": false
