@@ -94,6 +94,15 @@ declare global {
    * UnsafeWindow for accessing page's global scope
    */
   const unsafeWindow: Window & typeof globalThis;
+
+  /**
+   * Build-time constants injected by Vite
+   */
+  const __DEV__: boolean;
+  const __VERSION__: string;
+  const __DEBUG__: boolean;
+  const __USERSCRIPT__: boolean;
+  const __BUILD_TIME__: string;
 }
 
 export {};

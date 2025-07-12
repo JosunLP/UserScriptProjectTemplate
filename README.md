@@ -126,6 +126,25 @@ npm run clean           # Clean dist folder
 npm run type-check      # TypeScript type checking
 ```
 
+### Build Optimization
+
+The template features advanced build optimization for production:
+
+| Build Type      | File Size | Compressed | Features                               |
+| --------------- | --------- | ---------- | -------------------------------------- |
+| **Development** | ~115 KB   | ~30 KB     | Source maps, debug info, readable code |
+| **Production**  | ~25 KB    | ~6 KB      | Minified, tree-shaken, optimized       |
+
+**Production optimizations include:**
+
+- ⚡ **Terser minification** with aggressive compression settings
+- 🌳 **Tree-shaking** to remove unused code
+- 🎯 **Dead code elimination** for **DEV** blocks
+- 📦 **Module inlining** for single-file output
+- 🔧 **Property mangling** for smaller variable names
+- 🚀 **ES2020 target** for modern JavaScript features
+- 💾 **GZIP compression** reducing size by ~75%
+
 ### Development Workflow
 
 1. **Configure your script** in `header.config.json`

@@ -9,7 +9,7 @@
     "dev:header": "npm run build-userScriptHeader",
     "dev:build": "vite build --mode development && npm run build-userScriptHeader",
     "build": "vite build && npm run build-userScriptHeader",
-    "build:prod": "vite build --mode production && npm run build-userScriptHeader",
+    "build:prod": "npm run clean && vite build --mode production && npm run build-userScriptHeader",
     "build-tooling": "tsc ./tools/userScriptHeader.ts --resolveJsonModule --esModuleInterop",
     "build-userScriptHeader": "npm run build-tooling && node ./tools/userScriptHeader.js",
     "validate": "npm run type-check && npm run lint",

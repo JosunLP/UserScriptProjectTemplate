@@ -25,6 +25,14 @@ class App extends EventEmitter<AppEvents> {
 
   constructor() {
     super();
+
+    // Development-only debug information
+    if (__DEV__) {
+      console.log('🔧 UserScript starting in development mode');
+      console.log('📦 Version:', __VERSION__);
+      console.log('🕐 Build time:', __BUILD_TIME__);
+    }
+
     this.initialize();
   }
 
