@@ -1,15 +1,15 @@
 {
   "updateUrl": "",
   "downloadUrl": "",
-  "supportUrl": "",
+  "supportUrl": "https://github.com/JosunLP/UserScriptProjectTemplate/issues",
   "iconUrl": "./assets/icon.png",
   "environments": {
     "development": {
       "includes": [
         "http://localhost:*/*",
         "https://localhost:*/*",
-        "https://*.josunlp.de/*",
-        "https://josunlp.de/*"
+        "https://*.tiktok.com/*",
+        "https://tiktok.com/*"
       ],
       "excludes": [],
       "grants": [
@@ -24,13 +24,17 @@
       ]
     },
     "production": {
-      "includes": ["https://*.josunlp.de/*", "https://josunlp.de/*"],
+      "includes": [
+        "https://*.tiktok.com/*",
+        "https://tiktok.com/*"
+      ],
       "excludes": [],
       "grants": [
         "GM_setValue",
         "GM_getValue",
         "GM_deleteValue",
         "GM_listValues",
+        "GM_notification",
         "GM_registerMenuCommand"
       ]
     }

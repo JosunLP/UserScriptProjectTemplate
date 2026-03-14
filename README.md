@@ -1,337 +1,217 @@
-# UserScript Project Template
+# TikTok Quick Block
 
-[![GitHub license](https://img.shields.io/github/license/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/blob/main/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/issues)
-[![GitHub stars](https://img.shields.io/github/stars/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/network)
-
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-blue?logo=typescript&style=for-the-badge)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-7.0+-646CFF?logo=vite&style=for-the-badge)](https://vitejs.dev/)
-[![ESLint](https://img.shields.io/badge/ESLint-8.57+-4B32C3?logo=eslint&style=for-the-badge)](https://eslint.org/)
-[![Prettier](https://img.shields.io/badge/Prettier-3.6+-F7B93E?logo=prettier&style=for-the-badge)](https://prettier.io/)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&style=for-the-badge)](https://nodejs.org/)
-
-[![Tampermonkey](https://img.shields.io/badge/Tampermonkey-Compatible-00485B?logo=tampermonkey&style=for-the-badge)](https://www.tampermonkey.net/)
-[![Greasemonkey](https://img.shields.io/badge/Greasemonkey-Compatible-FF6600?logo=firefox&style=for-the-badge)](https://www.greasespot.net/)
-[![Violentmonkey](https://img.shields.io/badge/Violentmonkey-Compatible-663399?logo=violentmonkey&style=for-the-badge)](https://violentmonkey.github.io/)
-[![Mobile Support](https://img.shields.io/badge/Mobile-Support-00C851?logo=android&style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate#mobile-browser-support)
-
-[![Last Commit](https://img.shields.io/github/last-commit/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/commits)
-[![Contributors](https://img.shields.io/github/contributors/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/graphs/contributors)
-[![Repository Size](https://img.shields.io/github/repo-size/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate)
-
-## Description
-
-A modern, production-ready template for building UserScripts using TypeScript and Vite. This template provides a solid foundation with best practices, type safety, and modern development tools for creating sophisticated Tampermonkey and Greasemonkey scripts.
+A UserScript that adds a "Quick Block" button directly to TikTok comments, allowing you to block comment authors with a single click.
 
 ## Features
 
-- 🚀 **Modern Tech Stack:** TypeScript, Vite, ESLint, Prettier
-- 🛡️ **Type Safety:** Strict TypeScript configuration with comprehensive UserScript API definitions
-- 🔧 **Development Tools:** ESLint, Prettier, automated build pipeline
-- 🎯 **Environment Support:** Separate development and production configurations
-- 📦 **Modular Architecture:** Component system with reusable utilities
-- 💾 **Storage Management:** Type-safe wrapper for GM_setValue/GM_getValue
-- 🛠️ **Build System:** Optimized Vite configuration with automatic header generation
-- 🎨 **DOM Utilities:** Helper functions for element manipulation and waiting
-- 🔒 **Error Handling:** Comprehensive error boundary system
-- ⚡ **Event System:** Type-safe event emitter for module communication
-- 📱 **Mobile Support:** Touch-optimized interface with mobile browser detection
-- 🤏 **Touch Gestures:** Built-in touch event handling and gesture recognition
-- 📲 **Responsive Design:** Mobile-first CSS with safe area support for notched devices
+- ⚡ **One-Click Blocking**: Add a quick block button to every comment on TikTok
+- 🚫 **Instant Results**: Comments from blocked users are immediately hidden and blurred
+- 💾 **Persistent Storage**: Blocked users are saved across browser sessions
+- 📱 **Mobile Optimized**: Works on mobile browsers with touch support
+- 🎨 **Beautiful Design**: Styled buttons that match TikTok's design language
+- 📊 **Statistics**: Track how many users you've blocked and buttons injected
+- 🔔 **Notifications**: Get visual feedback when blocking users
 
 ## Installation
 
-### Quick Start
+### Prerequisites
 
-```bash
-git clone https://github.com/JosunLP/UserScriptProjectTemplate.git
-cd UserScriptProjectTemplate
-npm install
-```
+You need a UserScript manager installed in your browser:
 
-### Development Setup
+**Desktop Browsers:**
+- [Tampermonkey](https://www.tampermonkey.net/) (Chrome, Firefox, Safari, Edge, Opera)
+- [Greasemonkey](https://www.greasespot.net/) (Firefox)
+- [Violentmonkey](https://violentmonkey.github.io/) (Chrome, Firefox, Edge)
+
+**Mobile Browsers:**
+- [Kiwi Browser](https://kiwibrowser.com/) (Android) - Built-in Chrome extension support
+- [Firefox Mobile](https://www.mozilla.org/firefox/mobile/) (Android) - Install Greasemonkey or Tampermonkey
+- [Microsoft Edge Mobile](https://www.microsoft.com/edge/mobile) - Install Tampermonkey
+
+### Steps
+
+1. Install a UserScript manager (see above)
+2. Open the `dist/tiktok-quick-block.user.js` file
+3. Your UserScript manager should detect it and prompt you to install
+4. Confirm the installation
+5. Visit [TikTok](https://www.tiktok.com/)
+
+## Usage
+
+### Blocking Users
+
+1. Navigate to any TikTok video with comments
+2. Look for the "⚡ Quick Block" button next to each comment
+3. Click the button to instantly block that user
+4. The comment will be hidden and blurred
+5. A notification will confirm the block
+
+### Managing Blocked Users
+
+Access the UserScript menu (click the Tampermonkey icon in your browser) to:
+
+- **View Blocked Users**: See a list of all blocked users
+- **Clear Blocked Users**: Remove all blocks and start fresh
+- **Show Statistics**: View stats about blocks and button injections
+
+### Unblocking Users
+
+Currently, you can unblock all users by:
+1. Click the UserScript manager icon
+2. Select "Clear Blocked Users"
+3. Confirm the action
+4. Refresh the page
+
+## Development
+
+### Build from Source
 
 ```bash
 # Install dependencies
 npm install
 
-# Start development mode with auto-rebuild
+# Development build (with watch mode)
 npm run dev
+
+# Development build (single build)
+npm run dev:build
+
+# Production build
+npm run build:prod
 
 # Type checking
 npm run type-check
 
-# Linting and formatting
-npm run validate
-```
+# Linting
+npm run lint
+npm run lint:fix
 
-## Usage
+# Format code
+npm run format
+```
 
 ### Project Structure
 
-```bash
-src/
-├── types/            # TypeScript type definitions
-├── utils/            # Utility functions (Storage, DOM, Events)
-├── core/             # Core application logic
-├── modules/          # Feature modules
-└── index.ts          # Main application entry point
-
-tools/
-├── userScriptHeader.ts  # UserScript header generator
-
-assets/               # Icons and static resources
-└── icon.afdesign
+```
+tiktok-quick-block/
+├── src/
+│   ├── index.ts                      # Main entry point
+│   ├── modules/
+│   │   └── tiktok-quick-block.ts    # Core blocking functionality
+│   └── utils/
+│       ├── dom.ts                    # DOM manipulation helpers
+│       ├── events.ts                 # Event emitter
+│       ├── storage.ts                # Persistent storage wrapper
+│       └── mobile.ts                 # Mobile browser detection
+├── dist/                             # Built userscript
+├── header.config.json                # UserScript metadata
+├── package.json                      # Project dependencies
+├── vite.config.ts                   # Build configuration
+└── tsconfig.json                    # TypeScript configuration
 ```
 
-### Configuration
+### How It Works
 
-The main configuration is in `header.config.json`. This file controls UserScript metadata generation:
+1. **Initialization**: The script waits for TikTok's page to load
+2. **Comment Detection**: Uses MutationObserver to detect comments as they appear
+3. **Button Injection**: Injects a styled "Quick Block" button next to each comment
+4. **User Blocking**: Stores blocked usernames in browser storage
+5. **Comment Hiding**: Applies visual effects to hide blocked users' comments
+6. **Continuous Monitoring**: Watches for new comments and processes them automatically
 
-```json
-{
-  "environments": {
-    "development": {
-      "includes": ["http://localhost:*/*", "https://localhost:*/*"],
-      "grants": ["GM_setValue", "GM_getValue", "GM_log", "GM_notification"]
-    },
-    "production": {
-      "includes": ["https://your-domain.com/*"],
-      "grants": ["GM_setValue", "GM_getValue"]
-    }
-  }
-}
-```
+### Technical Details
 
-### Build Commands
+- Built with **TypeScript** for type safety
+- Uses **Vite** for fast builds and optimizations
+- Leverages **GM_setValue/GM_getValue** for persistent storage
+- Mobile-first responsive design
+- Supports both desktop and mobile TikTok layouts
 
-```bash
-# Development
-npm run dev              # Start development with watch mode
-npm run dev:build        # Single development build with header
-npm run dev:header       # Generate header for existing dev build
+## Browser Support
 
-# Production
-npm run build            # Build for production
-npm run build:prod       # Explicit production build
+### Desktop
+- ✅ Chrome/Chromium
+- ✅ Firefox
+- ✅ Safari
+- ✅ Edge
+- ✅ Opera
 
-# Quality Assurance
-npm run validate         # Type check + lint
-npm run lint            # ESLint with auto-fix
-npm run format          # Prettier formatting
+### Mobile
+- ✅ Kiwi Browser (Android)
+- ✅ Firefox Mobile (Android)
+- ✅ Edge Mobile (Android/iOS)
+- ✅ Safari Mobile (iOS) - with Userscripts app
+- ⚠️ Other mobile browsers may work with appropriate UserScript managers
 
-# Utilities
-npm run clean           # Clean dist folder
-npm run type-check      # TypeScript type checking
-```
+## Permissions
 
-### Build Optimization
+This UserScript requires the following permissions:
 
-The template features advanced build optimization for production:
+- `GM_setValue` / `GM_getValue`: Store blocked users list
+- `GM_deleteValue` / `GM_listValues`: Manage stored data
+- `GM_notification`: Show block confirmation notifications
+- `GM_registerMenuCommand`: Add menu commands for management
 
-| Build Type      | File Size | Compressed | Features                               |
-| --------------- | --------- | ---------- | -------------------------------------- |
-| **Development** | ~115 KB   | ~30 KB     | Source maps, debug info, readable code |
-| **Production**  | ~25 KB    | ~6 KB      | Minified, tree-shaken, optimized       |
+## Privacy
 
-**Production optimizations include:**
+- All data is stored **locally** in your browser
+- No external servers or tracking
+- No data is sent to third parties
+- Blocked users list is stored using browser's UserScript storage
 
-- ⚡ **Terser minification** with aggressive compression settings
-- 🌳 **Tree-shaking** to remove unused code
-- 🎯 **Dead code elimination** for **DEV** blocks
-- 📦 **Module inlining** for single-file output
-- 🔧 **Property mangling** for smaller variable names
-- 🚀 **ES2020 target** for modern JavaScript features
-- 💾 **GZIP compression** reducing size by ~75%
+## Troubleshooting
 
-### Development Workflow
+### Buttons not appearing?
 
-1. **Configure your script** in `header.config.json`
-2. **Start development:** `npm run dev`
-3. **Write your code** in the `src/` directory
-4. **Build for production:** `npm run build`
-5. **Install the UserScript** from `dist/` folder in Tampermonkey/Greasemonkey
+- Make sure you're on a TikTok video page with comments
+- Refresh the page
+- Check that the UserScript is enabled in your UserScript manager
+- Open browser console and look for any errors
 
-### Storage Management
+### Comments still visible after blocking?
 
-The template includes a type-safe storage system:
+- Try refreshing the page
+- Clear blocked users and try blocking again
+- Check browser console for errors
 
-```typescript
-import { Storage } from '@/utils/storage';
+### Mobile issues?
 
-// Save data
-Storage.set('userData', { name: 'John', visits: 5 });
-
-// Get data with default value
-const userData = Storage.get('userData', { name: '', visits: 0 });
-
-// Check if key exists
-if (Storage.has('userData')) {
-  // Key exists
-}
-
-// Remove data
-Storage.remove('userData');
-```
-
-### DOM Utilities
-
-Helper functions for DOM manipulation:
-
-```typescript
-import { DOMUtils } from '@/utils/dom';
-
-// Wait for element to appear
-const element = await DOMUtils.waitForElement('.my-selector');
-
-// Add custom styles
-DOMUtils.addStyles(`
-  .my-class { color: red; }
-`);
-
-// Create element with attributes
-const button = DOMUtils.createElement('button', {
-  textContent: 'Click me',
-  onclick: () => console.log('Clicked!'),
-});
-```
-
-### Event System
-
-Type-safe communication between modules:
-
-```typescript
-import { EventEmitter } from '@/utils/events';
-
-interface MyEvents {
-  userAction: { userId: string };
-  dataLoaded: { count: number };
-}
-
-const emitter = new EventEmitter<MyEvents>();
-
-// Listen for events
-emitter.on('userAction', ({ userId }) => {
-  console.log(`User ${userId} performed an action`);
-});
-
-// Emit events
-emitter.emit('userAction', { userId: '123' });
-```
-
-### Module System
-
-Create reusable, event-driven modules:
-
-```typescript
-import { EventEmitter } from '@/utils/events';
-
-interface ModuleEvents {
-  initialized: void;
-  actionPerformed: { action: string };
-}
-
-export class MyModule extends EventEmitter<ModuleEvents> {
-  async initialize() {
-    // Module initialization logic
-    this.emit('initialized', undefined);
-  }
-}
-```
-
-### Mobile Utilities
-
-Mobile-specific functionality for touch-enabled devices:
-
-```typescript
-import { MobileUtils } from '@/utils/mobile';
-
-// Detect mobile browser and capabilities
-const detection = MobileUtils.detect();
-console.log('Is Mobile:', detection.isMobile);
-console.log('Has Touch:', detection.hasTouch);
-console.log('Browser:', detection.browser);
-
-// Add mobile-optimized styles
-if (detection.isMobile) {
-  MobileUtils.addMobileStyles();
-}
-
-// Unified touch/mouse event handling
-MobileUtils.addUnifiedEventListener(element, 'start', event => {
-  const position = MobileUtils.getEventPosition(event);
-  console.log('Touch/click at:', position);
-});
-
-// Create mobile-friendly buttons
-const button = mobileModule.createMobileButton('Action', () => {
-  console.log('Button pressed');
-});
-
-// Orientation detection
-console.log('Portrait mode:', MobileUtils.isPortrait());
-```
-
-## UserScript Compatibility
-
-- **Tampermonkey:** Full support with all GM\_\* APIs
-- **Greasemonkey:** Compatible with standard UserScript APIs
-- **Violentmonkey:** Full compatibility
-- **Safari:** Works with userscript managers
-
-### Mobile Browser Support
-
-**Android:**
-
-- **Kiwi Browser:** Full Chrome extension + UserScript support
-- **Microsoft Edge Mobile:** Tampermonkey support
-- **Firefox Mobile:** Greasemonkey, Tampermonkey, Violentmonkey
-- **Yandex Browser:** Chrome extension support
-
-**iOS:**
-
-- **Safari Mobile:** Tampermonkey or Userscripts App
-- Limited support due to iOS restrictions
-
-### Mobile Features
-
-- **Touch Gestures:** Tap, swipe, and pinch detection
-- **Responsive Design:** Mobile-first CSS with viewport adaptation
-- **Safe Area Support:** Automatic handling of notched devices
-- **Orientation Detection:** Portrait/landscape change handling
-- **Mobile-Optimized UI:** Touch-friendly buttons and menus
+- Ensure your mobile browser supports UserScripts
+- Try Kiwi Browser (Android) for best compatibility
+- Make sure Tampermonkey is properly installed and enabled
 
 ## Contributing
 
+This project was created from the [UserScript Project Template](https://github.com/JosunLP/UserScriptProjectTemplate).
+
+To contribute:
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and ensure tests pass: `npm run validate`
-4. Commit your changes: `git commit -m 'Add amazing feature'`
-5. Push to the branch: `git push origin feature/amazing-feature`
-6. Open a Pull Request
-
-## Development Guidelines
-
-- Follow TypeScript best practices
-- Use meaningful variable and function names
-- Add proper error handling
-- Write self-documenting code
-- Follow the established project structure
-- Run `npm run validate` before committing
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ## License
 
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+MIT License - See LICENSE file for details
 
 ## Author
 
-**_Jonas Pfalzgraf_**
+Jonas Pfalzgraf <info@josunlp.de>
 
-- Email: [info@josunlp.de](mailto:info@josunlp.de)
-- GitHub: [@JosunLP](https://github.com/JosunLP)
-- Website: [josunlp.de](https://josunlp.de)
+## Acknowledgments
+
+Built with the [UserScript Project Template](https://github.com/JosunLP/UserScriptProjectTemplate) which provides:
+- Modern TypeScript tooling
+- Mobile browser support
+- Build optimization
+- Developer utilities
+
+## Disclaimer
+
+This UserScript is provided as-is. TikTok's structure may change, which could break functionality. The script only works on the TikTok web app, not the mobile app.
 
 ---
 
-**_Built with ❤️ for the UserScript community_**
+**Note**: This is an independent project and is not affiliated with, endorsed by, or connected to TikTok or ByteDance.
+
