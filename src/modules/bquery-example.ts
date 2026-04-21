@@ -19,6 +19,10 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
   private static readonly panelId = 'bquery-example-panel';
   private static readonly panelContentId = 'bquery-example-panel-content';
   private static readonly toggleButtonId = 'bquery-example-toggle';
+  private static getInitialActionCount(): number {
+    const initialActionCount = Storage.get<number>('bqueryExample.actionCount', 0);
+    return typeof initialActionCount === 'number' ? initialActionCount : 0;
+  }
 
   private isInitialized = false;
   private panelElement: HTMLElement | null = null;
@@ -29,9 +33,7 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
   private viewportElement: HTMLElement | null = null;
   private summaryElement: HTMLElement | null = null;
   private statusElement: HTMLParagraphElement | null = null;
-  private readonly actionCount = signal<number>(
-    Storage.get<number>('bqueryExample.actionCount', 0)!
-  );
+  private readonly actionCount = signal<number>(BQueryExampleModule.getInitialActionCount());
   private readonly panelOpen = signal(false);
   private readonly status = signal('Ready to test selective bQuery integration.');
   private readonly viewport = useViewport();
