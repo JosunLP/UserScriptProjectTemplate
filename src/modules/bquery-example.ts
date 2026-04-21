@@ -87,9 +87,9 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
         color: #f9fafb;
         box-shadow: 0 12px 28px rgba(15, 23, 42, 0.28);
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        transform: translateY(calc(100% + 24px));
+        transform: translateY(calc(100% - 48px));
         opacity: 0;
-        pointer-events: none;
+        pointer-events: auto;
         transition: transform 0.2s ease, opacity 0.2s ease;
       }
 
