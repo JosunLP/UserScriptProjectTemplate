@@ -16,6 +16,13 @@ function isBuildEnvironment(value: string | undefined): value is BuildEnvironmen
   return value === 'production' || value === 'development';
 }
 
+if (requestedEnvironment !== undefined && !isBuildEnvironment(requestedEnvironment)) {
+  console.error(
+    `❌ Invalid build environment "${requestedEnvironment}". Expected "production" or "development".`
+  );
+  process.exit(1);
+}
+
 function resolveBuildTarget(environment?: BuildEnvironment): {
   environment: BuildEnvironment;
   targetFile: string;
