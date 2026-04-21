@@ -1,3 +1,4 @@
+import { BQueryExampleModule } from '@/modules/bquery-example';
 import { ExampleModule } from '@/modules/example';
 import { DOMUtils } from '@/utils/dom';
 import { EventEmitter } from '@/utils/events';
@@ -94,6 +95,10 @@ class App extends EventEmitter<AppEvents> {
       await exampleModule.initialize();
       this.registerModule('example', exampleModule);
 
+      const bQueryExampleModule = new BQueryExampleModule();
+      await bQueryExampleModule.initialize();
+      this.registerModule('bquery-example', bQueryExampleModule);
+
       // Initialize mobile module if on mobile device
       const mobileInfo = MobileUtils.detect();
       if (mobileInfo.isMobile || mobileInfo.hasTouch) {
@@ -121,6 +126,16 @@ class App extends EventEmitter<AppEvents> {
         const timestamp = eventData.timestamp;
         console.log(
           `📡 Module action received: ${action} at ${new Date(timestamp).toLocaleString()}`
+        );
+      });
+
+      bQueryExampleModule.on('actionPerformed', eventData => {
+        const trigger = eventData.trigger;
+        const count = eventData.count;
+        const viewport = eventData.viewport;
+        const mode = eventData.compact ? 'compact' : 'wide';
+        console.log(
+          `✨ bQuery module action: ${trigger} (count: ${count}, viewport: ${viewport}, mode: ${mode})`
         );
       });
     } catch (error) {
