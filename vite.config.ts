@@ -90,7 +90,7 @@ export default defineConfig(({ mode }) => {
               comments: false,
               beautify: false,
             },
-            ecma: 'latest',
+            ecma: 2026,
             toplevel: true,
             safari10: false,
             ie8: false,
