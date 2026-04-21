@@ -110,13 +110,13 @@ The main configuration is in `header.config.json`. This file controls UserScript
 The template now ships with a selective `@bquery/bquery` example instead of replacing the existing utility layer.
 
 - The existing `DOMUtils`, `EventEmitter`, `Storage`, and mobile helpers remain the default foundation.
-- The advanced example in `/home/runner/work/UserScriptProjectTemplate/UserScriptProjectTemplate/src/modules/bquery-example.ts` demonstrates when bQuery adds value:
+- The advanced example in `src/modules/bquery-example.ts` demonstrates when bQuery adds value:
   - `@bquery/bquery/core` for DOM updates and delegated events
   - `@bquery/bquery/reactive` for signal-driven state
   - `@bquery/bquery/media` for responsive viewport state
 - Only subpath imports are used so the bundle stays as small as possible.
 - Because bQuery ships modern ESM, the advanced path now targets current UserScript-capable browsers and runtime versions (`node >=24`, `bun >=1.3.11`).
-- If you do not want the advanced path, remove the `bquery-example` module import from `/home/runner/work/UserScriptProjectTemplate/UserScriptProjectTemplate/src/index.ts` and uninstall `@bquery/bquery`.
+- If you do not want the advanced path, remove the `bquery-example` module import from `src/index.ts` and uninstall `@bquery/bquery`.
 
 This keeps the base template approachable while still providing a modern upgrade path for more interactive UserScripts.
 
