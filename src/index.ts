@@ -1,3 +1,4 @@
+import { BQueryExampleModule } from '@/modules/bquery-example';
 import { ExampleModule } from '@/modules/example';
 import { DOMUtils } from '@/utils/dom';
 import { EventEmitter } from '@/utils/events';
@@ -94,8 +95,7 @@ class App extends EventEmitter<AppEvents> {
       await exampleModule.initialize();
       this.registerModule('example', exampleModule);
 
-      const bQueryModuleImport = await import('@/modules/bquery-example');
-      const bQueryExampleModule = new bQueryModuleImport.BQueryExampleModule();
+      const bQueryExampleModule = new BQueryExampleModule();
       await bQueryExampleModule.initialize();
       this.registerModule('bquery-example', bQueryExampleModule);
 

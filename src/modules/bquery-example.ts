@@ -16,6 +16,10 @@ interface BQueryExampleModuleEvents {
 }
 
 export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents> {
+  private static readonly panelId = 'bquery-example-panel';
+  private static readonly panelContentId = 'bquery-example-panel-content';
+  private static readonly toggleButtonId = 'bquery-example-toggle';
+
   private isInitialized = false;
   private readonly actionCount = signal(Storage.get<number>('bqueryExample.actionCount', 0) ?? 0);
   private readonly panelOpen = signal(false);
@@ -156,36 +160,51 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
   }
 
   private renderPanel(): void {
-    if (document.getElementById('bquery-example-panel')) {
+    if (document.getElementById(BQueryExampleModule.panelId)) {
       return;
     }
 
+    const isOpen = this.panelOpen.value;
     const panel = document.createElement('aside');
-    panel.id = 'bquery-example-panel';
+    panel.id = BQueryExampleModule.panelId;
     panel.setAttribute('aria-live', 'polite');
+    panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
     panel.innerHTML = `
       <div class="bquery-example-header">
         <h2 class="bquery-example-title">✨ bQuery Advanced Example</h2>
-        <button class="bquery-example-button bquery-example-button--secondary" type="button" data-bquery-action="toggle">
+        <button
+          id="${BQueryExampleModule.toggleButtonId}"
+          class="bquery-example-button bquery-example-button--secondary"
+          type="button"
+          data-bquery-action="toggle"
+          aria-expanded="${isOpen ? 'true' : 'false'}"
+          aria-controls="${BQueryExampleModule.panelContentId}"
+        >
           <span id="bquery-example-toggle-label">Show panel</span>
         </button>
       </div>
-      <p class="bquery-example-description">
-        This demo keeps the existing template utilities and adds a selective bQuery layer for DOM updates, reactivity, and responsive state.
-      </p>
-      <div class="bquery-example-metrics">
-        <p class="bquery-example-metric">Reactive count: <strong id="bquery-example-count">0</strong></p>
-        <p class="bquery-example-metric">Viewport: <strong id="bquery-example-viewport">0×0</strong></p>
-        <p class="bquery-example-metric">Summary: <strong id="bquery-example-summary">Loading…</strong></p>
-      </div>
-      <p class="bquery-example-status" id="bquery-example-status">Ready to test selective bQuery integration.</p>
-      <div class="bquery-example-actions">
-        <button class="bquery-example-button bquery-example-button--primary" type="button" data-bquery-action="increment">
-          Trigger reactive update
-        </button>
-        <button class="bquery-example-button bquery-example-button--secondary" type="button" data-bquery-action="reset">
-          Reset
-        </button>
+      <div
+        id="${BQueryExampleModule.panelContentId}"
+        aria-hidden="${isOpen ? 'false' : 'true'}"
+        ${isOpen ? '' : 'inert'}
+      >
+        <p class="bquery-example-description">
+          This demo keeps the existing template utilities and adds a selective bQuery layer for DOM updates, reactivity, and responsive state.
+        </p>
+        <div class="bquery-example-metrics">
+          <p class="bquery-example-metric">Reactive count: <strong id="bquery-example-count">0</strong></p>
+          <p class="bquery-example-metric">Viewport: <strong id="bquery-example-viewport">0×0</strong></p>
+          <p class="bquery-example-metric">Summary: <strong id="bquery-example-summary">Loading…</strong></p>
+        </div>
+        <p class="bquery-example-status" id="bquery-example-status">Ready to test selective bQuery integration.</p>
+        <div class="bquery-example-actions">
+          <button class="bquery-example-button bquery-example-button--primary" type="button" data-bquery-action="increment">
+            Trigger reactive update
+          </button>
+          <button class="bquery-example-button bquery-example-button--secondary" type="button" data-bquery-action="reset">
+            Reset
+          </button>
+        </div>
       </div>
     `;
 
@@ -193,7 +212,7 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
   }
 
   private bindPanel(): void {
-    const panel = $('#bquery-example-panel');
+    const panel = $(`#${BQueryExampleModule.panelId}`);
 
     panel.delegate('click', '[data-bquery-action]', (_event, target) => {
       const action = target.getAttribute('data-bquery-action');
@@ -227,10 +246,28 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
 
     effect(() => {
       const viewport = this.viewport.value;
+      const isOpen = this.panelOpen.value;
+      const panelElement = document.getElementById(BQueryExampleModule.panelId);
+      const toggleButton = document.getElementById(
+        BQueryExampleModule.toggleButtonId
+      ) as HTMLButtonElement | null;
+      const panelContent = document.getElementById(BQueryExampleModule.panelContentId);
 
-      panel.toggleClass('is-open', this.panelOpen.value);
+      panel.toggleClass('is-open', isOpen);
       panel.toggleClass('is-compact', this.isCompact.value);
-      $('#bquery-example-toggle-label').text(this.panelOpen.value ? 'Hide panel' : 'Show panel');
+      toggleButton?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      panelElement?.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      panelContent?.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+
+      if (panelContent) {
+        if (isOpen) {
+          panelContent.removeAttribute('inert');
+        } else {
+          panelContent.setAttribute('inert', '');
+        }
+      }
+
+      $('#bquery-example-toggle-label').text(isOpen ? 'Hide panel' : 'Show panel');
       $('#bquery-example-count').text(String(this.actionCount.value));
       $('#bquery-example-viewport').text(
         `${viewport.width}×${viewport.height} (${viewport.orientation})`
