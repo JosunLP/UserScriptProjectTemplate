@@ -646,7 +646,6 @@ FodyWeavers.xsd
 # Project specific
 dist/
 build/
-tools/userScriptHeader.js
 
 # Dependencies
 node_modules/

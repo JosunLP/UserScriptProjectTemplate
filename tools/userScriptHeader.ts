@@ -1,25 +1,79 @@
+/// <reference types="node" />
+
 import * as fs from 'fs';
 import config from '../header.config.json';
 import pkg from '../package.json';
+
+type BuildEnvironment = 'production' | 'development';
 
 // Check which file exists to determine the environment
 const prodFile = `./dist/${pkg.name}.user.js`;
 const devFile = `./dist/${pkg.name}.dev.user.js`;
 
-let targetFile: string;
-let environment: 'production' | 'development';
+const requestedEnvironment = process.argv[2];
 
-if (fs.existsSync(prodFile)) {
-  targetFile = prodFile;
-  environment = 'production';
-} else if (fs.existsSync(devFile)) {
-  targetFile = devFile;
-  environment = 'development';
-} else {
+function isBuildEnvironment(value: string | undefined): value is BuildEnvironment {
+  return value === 'production' || value === 'development';
+}
+
+if (requestedEnvironment !== undefined && !isBuildEnvironment(requestedEnvironment)) {
+  console.error(
+    `❌ Invalid build environment "${requestedEnvironment}". Expected "production" or "development".`
+  );
+  process.exit(1);
+}
+
+function resolveBuildTarget(environment?: BuildEnvironment): {
+  environment: BuildEnvironment;
+  targetFile: string;
+} {
+  if (environment === 'production') {
+    if (!fs.existsSync(prodFile)) {
+      console.error(`❌ Expected production bundle at ${prodFile}, but it does not exist.`);
+      process.exit(1);
+    }
+
+    return {
+      environment,
+      targetFile: prodFile,
+    };
+  }
+
+  if (environment === 'development') {
+    if (!fs.existsSync(devFile)) {
+      console.error(`❌ Expected development bundle at ${devFile}, but it does not exist.`);
+      process.exit(1);
+    }
+
+    return {
+      environment,
+      targetFile: devFile,
+    };
+  }
+
+  if (fs.existsSync(prodFile)) {
+    return {
+      environment: 'production',
+      targetFile: prodFile,
+    };
+  }
+
+  if (fs.existsSync(devFile)) {
+    return {
+      environment: 'development',
+      targetFile: devFile,
+    };
+  }
+
   console.error('❌ No UserScript file found in dist/');
   console.error(`Expected either: ${prodFile} or ${devFile}`);
   process.exit(1);
 }
+
+const buildTarget = resolveBuildTarget(
+  isBuildEnvironment(requestedEnvironment) ? requestedEnvironment : undefined
+);
+const { environment, targetFile } = buildTarget;
 
 console.log(`🔧 Building UserScript header for ${environment} (${targetFile})`);
 
@@ -27,17 +81,9 @@ console.log(`🔧 Building UserScript header for ${environment} (${targetFile})`
  * Appends header
  * @param header
  */
-function appendHeader(header: string) {
-  fs.readFile(targetFile, 'utf8', (err: NodeJS.ErrnoException | null, data: string) => {
-    if (err) {
-      throw err;
-    }
-    fs.writeFile(targetFile, header + data, (err: NodeJS.ErrnoException | null) => {
-      if (err) {
-        throw err;
-      }
-    });
-  });
+async function appendHeader(header: string): Promise<void> {
+  const data = await fs.promises.readFile(targetFile, 'utf8');
+  await fs.promises.writeFile(targetFile, header + data);
 }
 
 /**
@@ -79,9 +125,6 @@ function removeEmptyLinesFromString(string: string): string {
  * Generates user script header
  */
 async function generateUserScriptHeader() {
-  // Determine environment from NODE_ENV or default to production
-  const environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
-
   // Get environment-specific config or fallback to empty arrays
   const envConfig = config.environments?.[environment] || {
     includes: [],
@@ -99,8 +142,6 @@ async function generateUserScriptHeader() {
   const allMatches = envConfig.includes.length > 0 ? envConfig.includes : config.matches;
   const matches = generateMultipleEntries('@match', allMatches);
 
-  // No includes needed as we use matches
-  const includes = '';
   const antifeatures = generateMultipleEntries('@antifeature', config.antifeatures);
   const base64url = await buildBase64UrlFromFile(config.iconUrl);
 
@@ -152,7 +193,7 @@ ${matchAllFrames}
 
   header = removeEmptyLinesFromString(header);
   header += '\n';
-  appendHeader(header);
+  await appendHeader(header);
 }
 
 generateUserScriptHeader();

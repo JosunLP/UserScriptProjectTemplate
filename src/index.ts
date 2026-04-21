@@ -97,23 +97,28 @@ class App extends EventEmitter<AppEvents> {
       // Initialize mobile module if on mobile device
       const mobileInfo = MobileUtils.detect();
       if (mobileInfo.isMobile || mobileInfo.hasTouch) {
-        const { MobileModule } = await import('@/modules/mobile');
-        const mobileModule = new MobileModule();
+        const mobileModuleImport = await import('@/modules/mobile');
+        const mobileModule = new mobileModuleImport.MobileModule();
         await mobileModule.initialize();
         this.registerModule('mobile', mobileModule);
 
         // Listen to mobile module events
-        mobileModule.on('gestureDetected', ({ type, position }) => {
+        mobileModule.on('gestureDetected', eventData => {
+          const type = eventData.type;
+          const position = eventData.position;
           console.log(`📱 Gesture detected: ${type} at ${position.x}, ${position.y}`);
         });
 
-        mobileModule.on('orientationChanged', ({ orientation }) => {
+        mobileModule.on('orientationChanged', eventData => {
+          const orientation = eventData.orientation;
           console.log(`📱 Orientation changed to: ${orientation}`);
         });
       }
 
       // Listen to example module events
-      exampleModule.on('actionPerformed', ({ action, timestamp }) => {
+      exampleModule.on('actionPerformed', eventData => {
+        const action = eventData.action;
+        const timestamp = eventData.timestamp;
         console.log(
           `📡 Module action received: ${action} at ${new Date(timestamp).toLocaleString()}`
         );

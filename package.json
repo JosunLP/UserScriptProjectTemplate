@@ -2,20 +2,17 @@
   "name": "userscript-project-template",
   "version": "1.0.0",
   "description": "A modern, production-ready template for building UserScripts using TypeScript and Vite with mobile browser support, touch gestures, and responsive design for Tampermonkey and Greasemonkey scripts.",
-  "main": "index.ts",
-  "module": "node",
   "scripts": {
     "dev": "vite build --watch --mode development",
-    "dev:header": "npm run build-userScriptHeader",
-    "dev:build": "vite build --mode development && npm run build-userScriptHeader",
-    "build": "vite build && npm run build-userScriptHeader",
-    "build:prod": "npm run clean && vite build --mode production && npm run build-userScriptHeader",
-    "build-tooling": "tsc ./tools/userScriptHeader.ts --resolveJsonModule --esModuleInterop",
-    "build-userScriptHeader": "npm run build-tooling && node ./tools/userScriptHeader.js",
-    "validate": "npm run type-check && npm run lint",
+    "dev:header": "bun run build-userScriptHeader -- development",
+    "dev:build": "vite build --mode development && bun run build-userScriptHeader -- development",
+    "build": "vite build && bun run build-userScriptHeader -- production",
+    "build:prod": "bun run clean && vite build --mode production && bun run build-userScriptHeader -- production",
+    "build-userScriptHeader": "bun ./tools/userScriptHeader.ts",
+    "validate": "bun run type-check && bun run lint",
     "lint": "eslint src/ --ext .ts,.tsx",
     "lint:fix": "eslint src/ --ext .ts,.tsx --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx,json}\"",
+    "format": "prettier --write \"{src,tools}/**/*.{ts,tsx,json}\" \"*.{json,md,js,ts}\"",
     "type-check": "tsc --noEmit",
     "clean": "rimraf dist"
   },
@@ -46,21 +43,19 @@
     "url": "https://github.com/JosunLP/UserScriptProjectTemplate/issues"
   },
   "homepage": "https://github.com/JosunLP/UserScriptProjectTemplate#readme",
+  "engines": {
+    "bun": ">=1.3.0"
+  },
   "devDependencies": {
+    "@types/node": "^24.12.2",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "eslint": "^8.57.1",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.5.1",
-    "prettier": "^3.6.2",
+    "prettier": "^3.8.3",
     "rimraf": "^5.0.10",
-    "ts-loader": "^9.3.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.4.0",
-    "undici-types": "^6.18.2",
-    "vite": "^7.0.4",
-    "vite-tsconfig-paths": "^4.3.2",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
+    "terser": "^5.46.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.2",
+    "vite-tsconfig-paths": "^4.3.2"
   }
 }
