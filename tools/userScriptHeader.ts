@@ -135,8 +135,6 @@ async function generateUserScriptHeader() {
   const allMatches = envConfig.includes.length > 0 ? envConfig.includes : config.matches;
   const matches = generateMultipleEntries('@match', allMatches);
 
-  // No includes needed as we use matches
-  const includes = '';
   const antifeatures = generateMultipleEntries('@antifeature', config.antifeatures);
   const base64url = await buildBase64UrlFromFile(config.iconUrl);
 
