@@ -21,7 +21,17 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
   private static readonly toggleButtonId = 'bquery-example-toggle';
 
   private isInitialized = false;
-  private readonly actionCount = signal(Storage.get<number>('bqueryExample.actionCount', 0) ?? 0);
+  private panelElement: HTMLElement | null = null;
+  private panelContentElement: HTMLDivElement | null = null;
+  private toggleButtonElement: HTMLButtonElement | null = null;
+  private toggleLabelElement: HTMLSpanElement | null = null;
+  private countElement: HTMLElement | null = null;
+  private viewportElement: HTMLElement | null = null;
+  private summaryElement: HTMLElement | null = null;
+  private statusElement: HTMLParagraphElement | null = null;
+  private readonly actionCount = signal<number>(
+    Storage.get<number>('bqueryExample.actionCount', 0)!
+  );
   private readonly panelOpen = signal(false);
   private readonly status = signal('Ready to test selective bQuery integration.');
   private readonly viewport = useViewport();
@@ -45,6 +55,7 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
       await DOMUtils.waitForElement('body', 5000);
       this.addModuleStyles();
       this.renderPanel();
+      this.cachePanelElements();
       this.bindPanel();
       this.registerMenuCommands();
 
@@ -167,7 +178,6 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
     const isOpen = this.panelOpen.value;
     const panel = document.createElement('aside');
     panel.id = BQueryExampleModule.panelId;
-    panel.setAttribute('aria-live', 'polite');
     panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
     panel.innerHTML = `
       <div class="bquery-example-header">
@@ -196,7 +206,7 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
           <p class="bquery-example-metric">Viewport: <strong id="bquery-example-viewport">0×0</strong></p>
           <p class="bquery-example-metric">Summary: <strong id="bquery-example-summary">Loading…</strong></p>
         </div>
-        <p class="bquery-example-status" id="bquery-example-status">Ready to test selective bQuery integration.</p>
+        <p class="bquery-example-status" id="bquery-example-status" aria-live="polite" aria-atomic="true">Ready to test selective bQuery integration.</p>
         <div class="bquery-example-actions">
           <button class="bquery-example-button bquery-example-button--primary" type="button" data-bquery-action="increment">
             Trigger reactive update
@@ -209,6 +219,25 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
     `;
 
     document.body.appendChild(panel);
+  }
+
+  private cachePanelElements(): void {
+    this.panelElement = document.getElementById(BQueryExampleModule.panelId);
+    this.panelContentElement = document.getElementById(
+      BQueryExampleModule.panelContentId
+    ) as HTMLDivElement | null;
+    this.toggleButtonElement = document.getElementById(
+      BQueryExampleModule.toggleButtonId
+    ) as HTMLButtonElement | null;
+    this.toggleLabelElement = document.getElementById(
+      'bquery-example-toggle-label'
+    ) as HTMLSpanElement | null;
+    this.countElement = document.getElementById('bquery-example-count');
+    this.viewportElement = document.getElementById('bquery-example-viewport');
+    this.summaryElement = document.getElementById('bquery-example-summary');
+    this.statusElement = document.getElementById(
+      'bquery-example-status'
+    ) as HTMLParagraphElement | null;
   }
 
   private bindPanel(): void {
@@ -247,33 +276,40 @@ export class BQueryExampleModule extends EventEmitter<BQueryExampleModuleEvents>
     effect(() => {
       const viewport = this.viewport.value;
       const isOpen = this.panelOpen.value;
-      const panelElement = document.getElementById(BQueryExampleModule.panelId);
-      const toggleButton = document.getElementById(
-        BQueryExampleModule.toggleButtonId
-      ) as HTMLButtonElement | null;
-      const panelContent = document.getElementById(BQueryExampleModule.panelContentId);
 
       panel.toggleClass('is-open', isOpen);
       panel.toggleClass('is-compact', this.isCompact.value);
-      toggleButton?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      panelElement?.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-      panelContent?.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      this.toggleButtonElement?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      this.panelElement?.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      this.panelContentElement?.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
 
-      if (panelContent) {
+      if (this.panelContentElement) {
         if (isOpen) {
-          panelContent.removeAttribute('inert');
+          this.panelContentElement.removeAttribute('inert');
         } else {
-          panelContent.setAttribute('inert', '');
+          this.panelContentElement.setAttribute('inert', '');
         }
       }
 
-      $('#bquery-example-toggle-label').text(isOpen ? 'Hide panel' : 'Show panel');
-      $('#bquery-example-count').text(String(this.actionCount.value));
-      $('#bquery-example-viewport').text(
-        `${viewport.width}×${viewport.height} (${viewport.orientation})`
-      );
-      $('#bquery-example-summary').text(this.summary.value);
-      $('#bquery-example-status').text(this.status.value);
+      if (this.toggleLabelElement) {
+        this.toggleLabelElement.textContent = isOpen ? 'Hide panel' : 'Show panel';
+      }
+
+      if (this.countElement) {
+        this.countElement.textContent = String(this.actionCount.value);
+      }
+
+      if (this.viewportElement) {
+        this.viewportElement.textContent = `${viewport.width}×${viewport.height} (${viewport.orientation})`;
+      }
+
+      if (this.summaryElement) {
+        this.summaryElement.textContent = this.summary.value;
+      }
+
+      if (this.statusElement) {
+        this.statusElement.textContent = this.status.value;
+      }
     });
   }
 
