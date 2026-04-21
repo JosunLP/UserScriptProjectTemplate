@@ -4,6 +4,9 @@
   "workspaces": {
     "": {
       "name": "userscript-project-template",
+      "dependencies": {
+        "@bquery/bquery": "1.10.0",
+      },
       "devDependencies": {
         "@types/node": "^24.12.2",
         "@typescript-eslint/eslint-plugin": "^7.18.0",
@@ -19,6 +22,8 @@
     },
   },
   "packages": {
+    "@bquery/bquery": ["@bquery/bquery@1.10.0", "", {}, "sha512-YsjyKl1pBtJ6TLX3hKNdtx973HY+mNK/i+fwglZZrDtdrUopRLunIei7C3j0Lx+qXbHL3bFnzt4/s/qAhlV5rg=="],
+
     "@esbuild/aix-ppc64": ["@esbuild/aix-ppc64@0.27.7", "", { "os": "aix", "cpu": "ppc64" }, "sha512-EKX3Qwmhz1eMdEJokhALr0YiD0lhQNwDqkPYyPhiSwKrh7/4KRjQc04sZ8db+5DVVnZ1LmbNDI1uAMPEUBnQPg=="],
 
     "@esbuild/android-arm": ["@esbuild/android-arm@0.27.7", "", { "os": "android", "cpu": "arm" }, "sha512-jbPXvB4Yj2yBV7HUfE2KHe4GJX51QplCN1pGbYjvsyCZbQmies29EoJbkEc+vYuU5o45AfQn37vZlyXy4YJ8RQ=="],
