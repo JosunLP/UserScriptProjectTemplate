@@ -5,11 +5,11 @@
 [![GitHub stars](https://img.shields.io/github/stars/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/network)
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-blue?logo=typescript&style=for-the-badge)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-blue?logo=typescript&style=for-the-badge)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-7.0+-646CFF?logo=vite&style=for-the-badge)](https://vitejs.dev/)
 [![ESLint](https://img.shields.io/badge/ESLint-8.57+-4B32C3?logo=eslint&style=for-the-badge)](https://eslint.org/)
 [![Prettier](https://img.shields.io/badge/Prettier-3.6+-F7B93E?logo=prettier&style=for-the-badge)](https://prettier.io/)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&style=for-the-badge)](https://nodejs.org/)
+[![Bun](https://img.shields.io/badge/Bun-1.2+-000000?logo=bun&style=for-the-badge)](https://bun.sh/)
 
 [![Tampermonkey](https://img.shields.io/badge/Tampermonkey-Compatible-00485B?logo=tampermonkey&style=for-the-badge)](https://www.tampermonkey.net/)
 [![Greasemonkey](https://img.shields.io/badge/Greasemonkey-Compatible-FF6600?logo=firefox&style=for-the-badge)](https://www.greasespot.net/)
@@ -26,9 +26,9 @@ A modern, production-ready template for building UserScripts using TypeScript an
 
 ## Features
 
-- 🚀 **Modern Tech Stack:** TypeScript, Vite, ESLint, Prettier
+- 🚀 **Modern Tech Stack:** TypeScript, Vite, ESLint, Prettier, Bun
 - 🛡️ **Type Safety:** Strict TypeScript configuration with comprehensive UserScript API definitions
-- 🔧 **Development Tools:** ESLint, Prettier, automated build pipeline
+- 🔧 **Development Tools:** ESLint, Prettier, Bun-powered automated build pipeline
 - 🎯 **Environment Support:** Separate development and production configurations
 - 📦 **Modular Architecture:** Component system with reusable utilities
 - 💾 **Storage Management:** Type-safe wrapper for GM_setValue/GM_getValue
@@ -47,23 +47,23 @@ A modern, production-ready template for building UserScripts using TypeScript an
 ```bash
 git clone https://github.com/JosunLP/UserScriptProjectTemplate.git
 cd UserScriptProjectTemplate
-npm install
+bun install
 ```
 
 ### Development Setup
 
 ```bash
 # Install dependencies
-npm install
+bun install
 
 # Start development mode with auto-rebuild
-npm run dev
+bun run dev
 
 # Type checking
-npm run type-check
+bun run type-check
 
 # Linting and formatting
-npm run validate
+bun run validate
 ```
 
 ## Usage
@@ -108,22 +108,23 @@ The main configuration is in `header.config.json`. This file controls UserScript
 
 ```bash
 # Development
-npm run dev              # Start development with watch mode
-npm run dev:build        # Single development build with header
-npm run dev:header       # Generate header for existing dev build
+bun run dev              # Start development with watch mode
+bun run dev:build        # Single development build with dev header
+bun run dev:header       # Generate header for an existing dev build
 
 # Production
-npm run build            # Build for production
-npm run build:prod       # Explicit production build
+bun run build            # Build for production
+bun run build:prod       # Explicit production build
 
 # Quality Assurance
-npm run validate         # Type check + lint
-npm run lint            # ESLint with auto-fix
-npm run format          # Prettier formatting
+bun run validate         # Type check + lint
+bun run lint             # ESLint
+bun run lint:fix         # ESLint with auto-fix
+bun run format           # Prettier formatting
 
 # Utilities
-npm run clean           # Clean dist folder
-npm run type-check      # TypeScript type checking
+bun run clean            # Clean dist folder
+bun run type-check       # TypeScript type checking
 ```
 
 ### Build Optimization
@@ -148,10 +149,11 @@ The template features advanced build optimization for production:
 ### Development Workflow
 
 1. **Configure your script** in `header.config.json`
-2. **Start development:** `npm run dev`
-3. **Write your code** in the `src/` directory
-4. **Build for production:** `npm run build`
-5. **Install the UserScript** from `dist/` folder in Tampermonkey/Greasemonkey
+2. **Install dependencies:** `bun install`
+3. **Start development:** `bun run dev`
+4. **Write your code** in the `src/` directory
+5. **Build for production:** `bun run build`
+6. **Install the UserScript** from `dist/` folder in Tampermonkey/Greasemonkey
 
 ### Storage Management
 
@@ -306,7 +308,7 @@ console.log('Portrait mode:', MobileUtils.isPortrait());
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and ensure tests pass: `npm run validate`
+3. Make your changes and ensure tests pass: `bun run validate`
 4. Commit your changes: `git commit -m 'Add amazing feature'`
 5. Push to the branch: `git push origin feature/amazing-feature`
 6. Open a Pull Request
@@ -318,7 +320,7 @@ console.log('Portrait mode:', MobileUtils.isPortrait());
 - Add proper error handling
 - Write self-documenting code
 - Follow the established project structure
-- Run `npm run validate` before committing
+- Run `bun run validate` before committing
 
 ## License
 
