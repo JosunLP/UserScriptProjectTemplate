@@ -34,6 +34,7 @@ A modern, production-ready template for building UserScripts using TypeScript an
 - 💾 **Storage Management:** Type-safe wrapper for GM_setValue/GM_getValue
 - 🛠️ **Build System:** Optimized Vite configuration with automatic header generation
 - 🎨 **DOM Utilities:** Helper functions for element manipulation and waiting
+- ✨ **Optional bQuery Upgrade Path:** Advanced example using `@bquery/bquery/core`, `reactive`, and `media`
 - 🔒 **Error Handling:** Comprehensive error boundary system
 - ⚡ **Event System:** Type-safe event emitter for module communication
 - 📱 **Mobile Support:** Touch-optimized interface with mobile browser detection
@@ -75,7 +76,7 @@ src/
 ├── types/            # TypeScript type definitions
 ├── utils/            # Utility functions (Storage, DOM, Events)
 ├── core/             # Core application logic
-├── modules/          # Feature modules
+├── modules/          # Feature modules, including the optional bQuery example
 └── index.ts          # Main application entry point
 
 tools/
@@ -103,6 +104,21 @@ The main configuration is in `header.config.json`. This file controls UserScript
   }
 }
 ```
+
+### Optional bQuery Integration
+
+The template now ships with a selective `@bquery/bquery` example instead of replacing the existing utility layer.
+
+- The existing `DOMUtils`, `EventEmitter`, `Storage`, and mobile helpers remain the default foundation.
+- The advanced example in `/home/runner/work/UserScriptProjectTemplate/UserScriptProjectTemplate/src/modules/bquery-example.ts` demonstrates when bQuery adds value:
+  - `@bquery/bquery/core` for DOM updates and delegated events
+  - `@bquery/bquery/reactive` for signal-driven state
+  - `@bquery/bquery/media` for responsive viewport state
+- Only subpath imports are used so the bundle stays as small as possible.
+- Because bQuery ships modern ESM, the advanced path now targets current UserScript-capable browsers and runtime versions (`node >=24`, `bun >=1.3.11`).
+- If you do not want the advanced path, remove the `bquery-example` module import from `/home/runner/work/UserScriptProjectTemplate/UserScriptProjectTemplate/src/index.ts` and uninstall `@bquery/bquery`.
+
+This keeps the base template approachable while still providing a modern upgrade path for more interactive UserScripts.
 
 ### Build Commands
 
@@ -241,6 +257,22 @@ export class MyModule extends EventEmitter<ModuleEvents> {
   }
 }
 ```
+
+### bQuery Advanced Example
+
+The included advanced example module shows a selective integration strategy:
+
+- keep GM storage in `Storage`
+- keep the existing template modules intact
+- add bQuery only where it improves ergonomics
+
+It uses:
+
+- reactive signals for counter and panel state
+- delegated event handling via bQuery core
+- viewport/media tracking via bQuery media helpers
+
+That makes it a good starting point for overlays, dashboards, and richer in-page tools without forcing a full framework-style migration.
 
 ### Mobile Utilities
 
