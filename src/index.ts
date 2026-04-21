@@ -97,8 +97,8 @@ class App extends EventEmitter<AppEvents> {
       // Initialize mobile module if on mobile device
       const mobileInfo = MobileUtils.detect();
       if (mobileInfo.isMobile || mobileInfo.hasTouch) {
-        const mobileModuleModule = await import('@/modules/mobile');
-        const mobileModule = new mobileModuleModule.MobileModule();
+        const mobileModuleImport = await import('@/modules/mobile');
+        const mobileModule = new mobileModuleImport.MobileModule();
         await mobileModule.initialize();
         this.registerModule('mobile', mobileModule);
 
