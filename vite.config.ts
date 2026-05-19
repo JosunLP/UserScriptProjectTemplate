@@ -90,7 +90,7 @@ export default defineConfig(({ mode }) => {
               comments: false,
               beautify: false,
             },
-            ecma: 2020,
+            ecma: 2026,
             toplevel: true,
             safari10: false,
             ie8: false,
@@ -99,8 +99,8 @@ export default defineConfig(({ mode }) => {
       assetsInlineLimit: Number.MAX_SAFE_INTEGER,
       // Disable CSS code splitting
       cssCodeSplit: false,
-      // Target modern browsers for better optimization
-      target: ['es2020', 'chrome80', 'firefox78', 'safari14'],
+      // Keep syntax modern enough for selective bQuery integration
+      target: 'esnext',
       // Report compressed file sizes
       reportCompressedSize: true,
       // Chunk size warnings
@@ -131,7 +131,7 @@ export default defineConfig(({ mode }) => {
     },
     // Enable esbuild optimizations
     esbuild: {
-      target: 'es2020',
+      target: 'esnext',
       legalComments: 'none',
       ...(isDev
         ? {}
