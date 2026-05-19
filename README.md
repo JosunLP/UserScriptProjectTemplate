@@ -5,10 +5,10 @@
 [![GitHub stars](https://img.shields.io/github/stars/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/JosunLP/UserScriptProjectTemplate?style=for-the-badge)](https://github.com/JosunLP/UserScriptProjectTemplate/network)
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-blue?logo=typescript&style=for-the-badge)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-7.0+-646CFF?logo=vite&style=for-the-badge)](https://vitejs.dev/)
-[![ESLint](https://img.shields.io/badge/ESLint-8.57+-4B32C3?logo=eslint&style=for-the-badge)](https://eslint.org/)
-[![Prettier](https://img.shields.io/badge/Prettier-3.6+-F7B93E?logo=prettier&style=for-the-badge)](https://prettier.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0+-blue?logo=typescript&style=for-the-badge)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-8.0+-646CFF?logo=vite&style=for-the-badge)](https://vitejs.dev/)
+[![ESLint](https://img.shields.io/badge/ESLint-10.4+-4B32C3?logo=eslint&style=for-the-badge)](https://eslint.org/)
+[![Prettier](https://img.shields.io/badge/Prettier-3.8+-F7B93E?logo=prettier&style=for-the-badge)](https://prettier.io/)
 [![Bun](https://img.shields.io/badge/Bun-1.3+-000000?logo=bun&style=for-the-badge)](https://bun.sh/)
 
 [![Tampermonkey](https://img.shields.io/badge/Tampermonkey-Compatible-00485B?logo=tampermonkey&style=for-the-badge)](https://www.tampermonkey.net/)
