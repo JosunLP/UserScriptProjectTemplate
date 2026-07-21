@@ -1,9 +1,9 @@
 import { resolve } from 'path';
-import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
+import type { RolldownLog } from 'rolldown';
+import { defineConfig, type ConfigEnv, type ESBuildOptions } from 'vite';
 import pkgjsn from './package.json';
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode }: ConfigEnv) => {
   const isDev = mode === 'development';
 
   return {
@@ -13,11 +13,9 @@ export default defineConfig(({ mode }) => {
         output: {
           entryFileNames: `${pkgjsn.name}${isDev ? '.dev' : ''}.user.js`,
           dir: resolve(__dirname, 'dist'),
-          // Disable code splitting - everything in one file for UserScript
-          inlineDynamicImports: true,
           manualChunks: undefined,
           // Optimize output format
-          format: 'iife',
+          format: 'iife' as const,
           // Remove unnecessary comments in production
           banner: isDev ? undefined : '',
           footer: isDev ? undefined : '',
@@ -27,12 +25,17 @@ export default defineConfig(({ mode }) => {
         // Tree-shaking optimizations
         treeshake: {
           moduleSideEffects: false,
-          propertyReadSideEffects: false,
+          propertyReadSideEffects: false as const,
           unknownGlobalSideEffects: false,
         },
+        onwarn(warning: RolldownLog, warn: (warning: RolldownLog) => void) {
+          // Suppress import.meta warnings for IIFE output (UserScript)
+          if (warning.code === 'EMPTY_IMPORT_META') return;
+          warn(warning);
+        },
       },
-      sourcemap: isDev ? 'inline' : false,
-      minify: isDev ? false : 'terser',
+      sourcemap: isDev ? ('inline' as const) : false,
+      minify: isDev ? false : ('terser' as const),
       // Enhanced Terser options for maximum compression
       terserOptions: isDev
         ? undefined
@@ -90,7 +93,7 @@ export default defineConfig(({ mode }) => {
               comments: false,
               beautify: false,
             },
-            ecma: 2026,
+            ecma: 2025 as const,
             toplevel: true,
             safari10: false,
             ie8: false,
@@ -101,13 +104,16 @@ export default defineConfig(({ mode }) => {
       cssCodeSplit: false,
       // Keep syntax modern enough for selective bQuery integration
       target: 'esnext',
+      // Disable module preload for UserScript IIFE output
+      modulePreload: false,
       // Report compressed file sizes
       reportCompressedSize: true,
       // Chunk size warnings
       chunkSizeWarningLimit: 500,
     },
-    plugins: [tsconfigPaths()],
+    plugins: [],
     resolve: {
+      tsconfigPaths: true,
       extensions: ['.tsx', '.ts', '.js'],
       alias: {
         '@': resolve(__dirname, 'src'),
@@ -141,6 +147,6 @@ export default defineConfig(({ mode }) => {
             minifySyntax: true,
             minifyWhitespace: true,
           }),
-    },
+    } as ESBuildOptions,
   };
 });
