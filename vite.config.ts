@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import type { RolldownLog } from 'rolldown';
 import { defineConfig, type ConfigEnv, type ESBuildOptions } from 'vite';
-import pkgjsn from './package.json';
+import pkgjsn from './package.json' with { type: 'json' };
 
 export default defineConfig(({ mode }: ConfigEnv) => {
   const isDev = mode === 'development';
@@ -9,10 +9,10 @@ export default defineConfig(({ mode }: ConfigEnv) => {
   return {
     build: {
       rollupOptions: {
-        input: resolve(__dirname, 'src/index.ts'),
+        input: resolve(import.meta.dirname, 'src/index.ts'),
         output: {
           entryFileNames: `${pkgjsn.name}${isDev ? '.dev' : ''}.user.js`,
-          dir: resolve(__dirname, 'dist'),
+          dir: resolve(import.meta.dirname, 'dist'),
           manualChunks: undefined,
           // Optimize output format
           format: 'iife' as const,
@@ -116,7 +116,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       tsconfigPaths: true,
       extensions: ['.tsx', '.ts', '.js'],
       alias: {
-        '@': resolve(__dirname, 'src'),
+        '@': resolve(import.meta.dirname, 'src'),
       },
     },
     define: {
